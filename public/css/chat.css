@@ -1971,3 +1971,72 @@ button:disabled, .btn-primary:disabled {
 .download-btn:hover {
     background: rgba(255, 255, 255, 0.1);
 }
+
+.file-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    margin-top: 8px;
+}
+
+.file-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.file-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #2d3748;
+}
+
+.file-size {
+    font-size: 0.75rem;
+    color: #718096;
+}
+
+.remove-file {
+    background: none;
+    border: none;
+    color: #e53e3e;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.file-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(74, 107, 223, 0.1);
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+.message.sent .file-message {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.download-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: #4a6bdf;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.message.sent .download-btn {
+    color: #4a6bdf;
+    background: white;
+}
+
+.download-btn:hover {
+    transform: translateY(-1px);
+}

@@ -485,36 +485,41 @@ function formatFileSize(bytes) {
 
 // Update the sendMessage function
 async function sendMessage() {
-    const text = messageInput.value.trim();
-    
-    if (!text && !currentFile) return;
+    const messageText = messageInput.value.trim();
+    if (!messageText && !selectedFile) return;
     if (!currentChat) return;
 
     try {
         sendBtn.disabled = true;
-        
-        const messageData = {
-            text: text,
+        let fileData = null;
+
+        if (selectedFile) {
+            fileData = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve({
+                    name: selectedFile.name,
+                    type: selectedFile.type,
+                    size: selectedFile.size,
+                    data: reader.result
+                });
+                reader.onerror = reject;
+                reader.readAsDataURL(selectedFile);
+            });
+        }
+
+        const message = {
+            text: messageText,
             senderId: currentUser.uid,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            file: fileData
         };
 
-        if (currentFile) {
-            messageData.file = {
-                name: currentFile.name,
-                type: currentFile.type,
-                size: currentFile.size,
-                data: currentFile.data
-            };
-        }
-
-        await firebase.database().ref(`chats/${currentChat}/messages`).push(messageData);
+        await firebase.database().ref(`chats/${currentChat}/messages`).push(message);
         
         messageInput.value = '';
-        if (currentFile) {
+        if (selectedFile) {
             removeSelectedFile();
         }
-        
     } catch (error) {
         console.error('Error sending message:', error);
         showStatusMessage('Failed to send message', 'error');
