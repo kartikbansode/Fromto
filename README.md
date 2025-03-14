@@ -1,4 +1,4 @@
-# Fromto – Real-time Private Chat Application  
+# Fromto – Real-time Private Chat Application  v1.0
 
 Fromto is a secure, real-time chat application built with Firebase, designed for private conversations using unique user codes. It prioritizes **simplicity, security, and ease of use** while delivering a seamless communication experience.  
 
