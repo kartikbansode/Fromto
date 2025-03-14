@@ -1,12 +1,3 @@
-// Firebase configuration should be the same as in auth.js
-const firebaseConfig = {
-    apiKey: "AIzaSyChYiTejtDAXaLTH0nCjKuJwR6_PvW6xMc",
-    authDomain: "fromto-72f98.firebaseapp.com",
-    projectId: "fromto-72f98",
-    storageBucket: "fromto-72f98.firebasestorage.app",
-    messagingSenderId: "907173125159",
-    appId: "1:907173125159:web:f35416f73900eaa8078202"
-};
 let messageListeners = {};
 const displayedMessages = new Set();
 

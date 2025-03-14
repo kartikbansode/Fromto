@@ -9,10 +9,12 @@ const firebaseConfig = {
     appId: "1:907173125159:web:f35416f73900eaa8078202"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase if not already initialized
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
 // Initialize Firebase Storage
-firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 const storageRef = storage.ref();   
 // Create global references to Firebase services
@@ -45,4 +47,4 @@ dbRef.child("test").set({
 })
 .catch((error) => {
     console.error("Database connection failed:", error);
-}); 
+});
