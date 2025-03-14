@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentFile = null;
 
     // Remove duplicate event listeners and consolidate file handling
-    document.getElementById('fileInput').addEventListener('change', async function(e) {
+    fileInput.addEventListener('change', async function(e) {
         const file = e.target.files[0];
         if (!file) return;
 
@@ -524,7 +524,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="file-name">${message.file.name}</div>
                         <div class="file-size">${formatFileSize(message.file.size)}</div>
                     </div>
-                    <button class="download-btn" onclick="downloadFile('${message.file.data}', '${message.file.name}')">
+                    <button class="download-btn" onclick="downloadFile('${message.file.url}', '${message.file.name}')">
                         <i class="fas fa-download"></i>
                     </button>
                 </div>
