@@ -10,6 +10,10 @@ const firebaseConfig = {
 let messageListeners = {};
 const displayedMessages = new Set();
 
+// Add file handling variables
+let selectedFile = null;
+const MAX_FILE_SIZE = 1024 * 1024; // 1MB
+
 // Initialize Firebase if not already initialized
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -156,6 +160,22 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="message-time">${timeString}</div>
         `;
         
+        if (message.file) {
+            const fileHtml = `
+                <div class="file-attachment">
+                    <i class="fas ${getFileIcon(message.file.type)}"></i>
+                    <div class="file-info">
+                        <div class="file-name">${message.file.name}</div>
+                        <div class="file-size">${formatFileSize(message.file.size)}</div>
+                    </div>
+                    <div class="download-btn" onclick="downloadFile('${message.file.name}', '${message.file.data}')">
+                        <i class="fas fa-download"></i>
+                    </div>
+                </div>
+            `;
+            messageDiv.innerHTML += fileHtml;
+        }
+
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
@@ -225,32 +245,40 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Send message
-    function sendMessage() {
+    async function sendMessage() {
         const text = messageInput.value.trim();
-        
-        if (!text || !chatRoomId) return;
+        if (!text && !selectedFile) return;
+        if (!chatRoomId) return;
 
-        const message = {
-            text: text,
-            senderId: currentUser.uid,
-            timestamp: Date.now()
-        };
+        try {
+            sendBtn.disabled = true;
+            let fileData = null;
 
-        // Disable send button while sending
-        sendBtn.disabled = true;
+            if (selectedFile) {
+                fileData = {
+                    name: selectedFile.name,
+                    type: selectedFile.type,
+                    size: selectedFile.size,
+                    data: await encodeFile(selectedFile)
+                };
+            }
 
-        database.ref(`chatRooms/${chatRoomId}/messages`).push(message)
-            .then(() => {
-                messageInput.value = '';
-                messageInput.focus();
-            })
-            .catch(error => {
-                console.error('Error sending message:', error);
-                alert('Failed to send message. Please try again.');
-            })
-            .finally(() => {
-                sendBtn.disabled = false;
-            });
+            const message = {
+                text: text,
+                senderId: currentUser.uid,
+                timestamp: Date.now(),
+                file: fileData
+            };
+
+            await database.ref(`chatRooms/${chatRoomId}/messages`).push(message);
+            messageInput.value = '';
+            removeSelectedFile();
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('Failed to send message. Please try again.');
+        } finally {
+            sendBtn.disabled = false;
+        }
     }
 
     // Send message event listeners
@@ -284,4 +312,71 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize chat
     initializeChat();
-}); 
+
+    document.getElementById('attachFileBtn').addEventListener('click', () => {
+        document.getElementById('fileInput').click();
+    });
+
+    document.getElementById('fileInput').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (file.size > MAX_FILE_SIZE) {
+            alert('File size must be less than 1MB');
+            e.target.value = '';
+            return;
+        }
+
+        const preview = document.getElementById('uploadPreview');
+        preview.innerHTML = `
+            <div class="file-preview">
+                <i class="fas ${getFileIcon(file.type)}"></i>
+                <span class="file-name">${file.name}</span>
+                <i class="fas fa-times remove-file" onclick="removeSelectedFile()"></i>
+            </div>
+        `;
+        preview.classList.add('active');
+        selectedFile = file;
+    });
+
+    function removeSelectedFile() {
+        selectedFile = null;
+        document.getElementById('fileInput').value = '';
+        document.getElementById('uploadPreview').innerHTML = '';
+        document.getElementById('uploadPreview').classList.remove('active');
+    }
+
+    async function encodeFile(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function downloadFile(fileName, dataUrl) {
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function getFileIcon(fileType) {
+        if (fileType.startsWith('image/')) return 'fa-image';
+        if (fileType.includes('pdf')) return 'fa-file-pdf';
+        if (fileType.includes('word')) return 'fa-file-word';
+        if (fileType.includes('excel') || fileType.includes('sheet')) return 'fa-file-excel';
+        return 'fa-file';
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 B';
+        const k = 1024;
+        const sizes = ['B', 'KB', 'MB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
+    }
+});

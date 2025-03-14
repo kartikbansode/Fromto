@@ -1704,3 +1704,52 @@ button:disabled, .btn-primary:disabled {
 .disconnect-card .status-message {
     margin-top: 1rem;
 }
+
+.upload-preview {
+    display: none;
+    padding: 8px;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.upload-preview.active {
+    display: block;
+}
+
+.file-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.message .file-attachment {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    margin-top: 4px;
+}
+
+.message .file-attachment .file-info {
+    flex: 1;
+}
+
+.message .file-attachment .download-btn {
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.file-error {
+    color: #e53e3e;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
