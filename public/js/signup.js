@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <h3 class="success-title">Email Verified Successfully!</h3>
-                    <p class="success-message">Redirecting to chat...</p>
+                    <p class="success-message">Redirecting...</p>
                 </div>
             </div>
         `;
@@ -400,14 +400,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 const user = firebase.auth().currentUser;
                 if (user) {
                     await user.sendEmailVerification({
-                        url: window.location.origin + '/public/chat.html'
+                        url: window.location.origin + 'https://kartikbansode.github.io/Fromto/public/chat.html'
                     });
                     showMessage('Verification email resent!', 'success');
                     timeLeft = 30;
                 } else {
                     await firebase.auth().signInWithEmailAndPassword(email, passwordInput.value);
                     await firebase.auth().currentUser.sendEmailVerification({
-                        url: window.location.origin + '/public/chat.html'
+                        url: window.location.origin + 'https://kartikbansode.github.io/Fromto/public/chat.html'
                     });
                 }
             } catch (error) {
@@ -462,7 +462,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
                 // Send verification email
                 await user.sendEmailVerification({
-                    url: window.location.origin + '/public/chat.html'
+                    url: window.location.origin + 'https://kartikbansode.github.io/Fromto/public/chat.html'
                 });
     
                 // Show verification status
@@ -562,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (verificationDiv) {
                     showVerificationSuccess();
                 } else {
-                    window.location.href = '/public/chat.html';
+                    window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
                 }
             } else {
                 showVerificationStatus(user.email);
