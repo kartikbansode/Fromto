@@ -245,6 +245,8 @@ p .forgot-password{
     z-index: 1;
     width: 85%;
     text-align: center;
+    transition: opacity 0.3s ease;
+    
 }
 
 
