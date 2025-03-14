@@ -25,9 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // App state
     let currentUser = null;
-    let userCode = null;
     let chatRoomId = null;
-    let messageListener = null;
 
     // Disable buttons initially
     copyCodeBtn.disabled = true;
