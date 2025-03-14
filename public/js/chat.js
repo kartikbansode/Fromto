@@ -1,4 +1,8 @@
 
+let messageListeners = {};
+const displayedMessages = new Set();
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Chat page loaded");
