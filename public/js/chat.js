@@ -427,24 +427,24 @@ document.getElementById('fileInput').addEventListener('change', async function(e
     const file = e.target.files[0];
     if (!file) return;
     
-    // Check file size (10MB limit)
-    if (file.size > 10 * 1024 * 1024) {
-        showStatusMessage('File size must be less than 10MB', 'error');
+    // Check file size (max 1MB for base64)
+    if (file.size > 1024 * 1024) {
+        showStatusMessage('File size must be less than 1MB', 'error');
+        e.target.value = '';
         return;
     }
-    
+
     try {
         const preview = document.getElementById('filePreview');
         preview.innerHTML = `
             <div class="file-preview">
                 <i class="fas ${getFileIcon(file.type)}"></i>
-                <span class="file-info">${file.name}</span>
-                <i class="fas fa-times remove-file" onclick="removeFile()"></i>
+                <span class="file-info">${file.name} (${formatFileSize(file.size)})</span>
+                <i class="fas fa-times remove-file" onclick="removeSelectedFile()"></i>
             </div>
         `;
         preview.classList.add('active');
         
-        // Convert file to base64
         currentFile = {
             name: file.name,
             type: file.type,
@@ -454,86 +454,127 @@ document.getElementById('fileInput').addEventListener('change', async function(e
     } catch (error) {
         console.error('Error processing file:', error);
         showStatusMessage('Error processing file', 'error');
+        e.target.value = '';
     }
 });
 
-function removeFile() {
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
+}
+
+function removeSelectedFile() {
     currentFile = null;
     const preview = document.getElementById('filePreview');
     preview.innerHTML = '';
     preview.classList.remove('active');
+    document.getElementById('fileInput').value = '';
 }
 
-async function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-function sendMessage() {
+// Update the sendMessage function
+async function sendMessage() {
     const text = messageInput.value.trim();
+    
     if (!text && !currentFile) return;
     if (!currentChat) return;
 
-    sendBtn.disabled = true;
-
     try {
-        const message = {
+        sendBtn.disabled = true;
+        
+        const messageData = {
             text: text,
             senderId: currentUser.uid,
             timestamp: Date.now()
         };
 
         if (currentFile) {
-            message.file = currentFile;
+            messageData.file = {
+                name: currentFile.name,
+                type: currentFile.type,
+                size: currentFile.size,
+                data: currentFile.data
+            };
         }
 
-        firebase.database().ref(`chats/${currentChat}/messages`).push(message)
-            .then(() => {
-                messageInput.value = '';
-                removeFile();
-            })
-            .catch(error => {
-                console.error('Error sending message:', error);
-                showStatusMessage('Failed to send message', 'error');
-            })
-            .finally(() => {
-                sendBtn.disabled = false;
-            });
+        await firebase.database().ref(`chats/${currentChat}/messages`).push(messageData);
+        
+        messageInput.value = '';
+        if (currentFile) {
+            removeSelectedFile();
+        }
+        
     } catch (error) {
         console.error('Error sending message:', error);
         showStatusMessage('Failed to send message', 'error');
+    } finally {
         sendBtn.disabled = false;
     }
 }
 
+// Update the displayMessage function
 function displayMessage(message) {
-    // ...existing message display code...
-
-    if (message.file) {
-        const fileElement = document.createElement('div');
-        fileElement.className = 'file-attachment';
-        fileElement.innerHTML = `
-            <i class="fas ${getFileIcon(message.file.type)} file-icon"></i>
-            <div class="file-info">${message.file.name}</div>
-            <a class="download-btn" onclick="downloadFile('${message.file.data}', '${message.file.name}')">
-                <i class="fas fa-download"></i>
-            </a>
-        `;
-        messageElement.appendChild(fileElement);
+    if (displayedMessages.has(message.id)) return;
+    
+    const messagesDiv = document.getElementById('messages');
+    const messageElement = document.createElement('div');
+    messageElement.className = `message ${message.senderId === currentUser.uid ? 'sent' : 'received'}`;
+    
+    let messageContent = '';
+    
+    if (message.text) {
+        messageContent += `<div class="message-content">${message.text}</div>`;
     }
-
-    // ...rest of existing message display code...
+    
+    if (message.file) {
+        messageContent += `
+            <div class="file-attachment">
+                <i class="fas ${getFileIcon(message.file.type)} file-icon"></i>
+                <div class="file-info">
+                    <div class="file-name">${message.file.name}</div>
+                    <div class="file-size">${formatFileSize(message.file.size)}</div>
+                </div>
+                <button class="download-btn" onclick="downloadFile('${message.file.data}', '${message.file.name}')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        `;
+    }
+    
+    const formattedTime = new Date(message.timestamp).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    messageContent += `<div class="message-time">${formattedTime}</div>`;
+    messageElement.innerHTML = messageContent;
+    
+    messagesDiv.appendChild(messageElement);
+    displayedMessages.add(message.id);
+    
+    if (isScrolledToBottom()) {
+        scrollToBottom();
+    }
 }
 
 function downloadFile(dataUrl, fileName) {
     const link = document.createElement('a');
     link.href = dataUrl;
     link.download = fileName;
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
 }
 
 function getFileIcon(fileType) {

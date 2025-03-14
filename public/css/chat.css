@@ -1886,3 +1886,88 @@ button:disabled, .btn-primary:disabled {
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.8);
 }
+
+.file-preview-container {
+    display: none;
+    padding: 8px;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.file-preview-container.active {
+    display: block;
+}
+
+.file-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.file-preview .file-info {
+    flex: 1;
+    font-size: 0.85rem;
+    color: #4a5568;
+}
+
+.file-preview .remove-file {
+    color: #e53e3e;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.file-attachment {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(74, 107, 223, 0.1);
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+.message.sent .file-attachment {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.file-attachment .file-icon {
+    color: #4a6bdf;
+    font-size: 1.2rem;
+}
+
+.file-attachment .file-info {
+    flex: 1;
+}
+
+.file-attachment .file-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.file-attachment .file-size {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+.download-btn {
+    background: none;
+    border: none;
+    color: #4a6bdf;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.message.sent .download-btn {
+    color: white;
+}
+
+.download-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
