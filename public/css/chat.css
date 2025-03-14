@@ -1753,3 +1753,136 @@ button:disabled, .btn-primary:disabled {
     font-size: 0.8rem;
     margin-top: 4px;
 }
+
+.attach-btn {
+    padding: 8px;
+    color: #4a6bdf;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.attach-btn:hover {
+    color: #3d5ccc;
+    transform: translateY(-1px);
+}
+
+.file-preview-container {
+    display: none;
+    padding: 8px;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-top: 8px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.file-preview-container.active {
+    display: block;
+}
+
+.file-preview-item {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px;
+    background: white;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.file-preview-item i {
+    margin-right: 8px;
+    color: #4a6bdf;
+}
+
+.file-name {
+    flex: 1;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.remove-file {
+    color: #e53e3e;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.file-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(74, 107, 223, 0.1);
+    border-radius: 6px;
+    margin-top: 4px;
+}
+
+.file-message .file-icon {
+    color: #4a6bdf;
+}
+
+.file-message .download-btn {
+    color: #4a6bdf;
+    text-decoration: none;
+}
+
+.message.sent .file-message {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.attach-btn {
+    padding: 8px;
+    color: #4a6bdf;
+    cursor: pointer;
+}
+
+.file-preview-container {
+    display: none;
+    padding: 8px;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.file-preview-container.active {
+    display: block;
+}
+
+.file-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    background: white;
+    border-radius: 6px;
+    margin-bottom: 4px;
+}
+
+.file-attachment {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(74, 107, 223, 0.1);
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+.file-attachment .file-icon {
+    color: #4a6bdf;
+}
+
+.file-attachment .file-info {
+    flex: 1;
+    font-size: 0.85rem;
+}
+
+.download-btn {
+    color: #4a6bdf;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.8);
+}
