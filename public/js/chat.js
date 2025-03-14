@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         auth.onAuthStateChanged(async (user) => {
             if (!user) {
                 console.log("No user signed in, redirecting to login");
-                window.location.href = '/public/login.html';
+                window.location.href = 'https://kartikbansode.github.io/Fromto/public/login.html';
                 return;
             }
 
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Logout button
     logoutBtn.addEventListener('click', () => {
         auth.signOut()
-            .then(() => window.location.href = '/public/login.html')
+            .then(() => window.location.href = 'https://kartikbansode.github.io/Fromto/public/login.html')
             .catch(error => {
                 console.error('Logout error:', error);
                 alert('Error signing out');
