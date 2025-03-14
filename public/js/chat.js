@@ -265,45 +265,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // Send message
     async function sendMessage() {
         const text = messageInput.value.trim();
-        const hasFiles = selectedFiles.length > 0;
         
-        if (!text && !hasFiles) return;
+        if (!text && !currentFile) return;
         if (!chatRoomId) return;
 
         try {
             sendBtn.disabled = true;
-            let fileAttachments = [];
             
-            if (hasFiles) {
-                fileAttachments = await Promise.all(selectedFiles.map(async file => {
-                    const fileRef = storage.ref(`chats/${chatRoomId}/${Date.now()}_${file.name}`);
-                    await fileRef.put(file);
-                    const url = await fileRef.getDownloadURL();
-                    
-                    return {
-                        name: file.name,
-                        type: file.type,
-                        size: file.size,
-                        url: url
-                    };
-                }));
-            }
-
             const message = {
                 text: text,
                 senderId: currentUser.uid,
-                timestamp: Date.now(),
-                files: fileAttachments
+                timestamp: Date.now()
             };
 
+            if (currentFile) {
+                message.file = currentFile;
+            }
+
             await database.ref(`chatRooms/${chatRoomId}/messages`).push(message);
+            
+            // Clear inputs
             messageInput.value = '';
-            selectedFiles = [];
-            document.getElementById('filePreview').innerHTML = '';
-            document.getElementById('filePreview').classList.remove('active');
+            if (currentFile) {
+                removeSelectedFile();
+            }
+            
         } catch (error) {
             console.error('Error sending message:', error);
-            alert('Failed to send message. Please try again.');
+            alert('Failed to send message');
         } finally {
             sendBtn.disabled = false;
         }
@@ -419,174 +408,163 @@ document.addEventListener('DOMContentLoaded', function() {
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
     }
-});
 
-let currentFile = null;
+    // File handling setup
+    const fileInput = document.getElementById('fileInput');
+    const filePreview = document.getElementById('filePreview');
+    let currentFile = null;
 
-document.getElementById('fileInput').addEventListener('change', async function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    // Check file size (max 1MB for base64)
-    if (file.size > 1024 * 1024) {
-        showStatusMessage('File size must be less than 1MB', 'error');
-        e.target.value = '';
-        return;
-    }
+    // Remove duplicate event listeners and consolidate file handling
+    fileInput.addEventListener('change', async function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
 
-    try {
-        const preview = document.getElementById('filePreview');
-        preview.innerHTML = `
-            <div class="file-preview">
-                <i class="fas ${getFileIcon(file.type)}"></i>
-                <span class="file-info">${file.name} (${formatFileSize(file.size)})</span>
-                <i class="fas fa-times remove-file" onclick="removeSelectedFile()"></i>
-            </div>
-        `;
-        preview.classList.add('active');
-        
-        currentFile = {
-            name: file.name,
-            type: file.type,
-            size: file.size,
-            data: await fileToBase64(file)
-        };
-    } catch (error) {
-        console.error('Error processing file:', error);
-        showStatusMessage('Error processing file', 'error');
-        e.target.value = '';
-    }
-});
+        // Check file size (max 1MB for base64)
+        if (file.size > 1024 * 1024) {
+            alert('File size must be less than 1MB');
+            e.target.value = '';
+            return;
+        }
 
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-    });
-}
-
-function removeSelectedFile() {
-    currentFile = null;
-    const preview = document.getElementById('filePreview');
-    preview.innerHTML = '';
-    preview.classList.remove('active');
-    document.getElementById('fileInput').value = '';
-}
-
-function formatFileSize(bytes) {
-    if (bytes === 0) return '0 B';
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-}
-
-// Update the sendMessage function
-async function sendMessage() {
-    const messageText = messageInput.value.trim();
-    if (!messageText && !selectedFile) return;
-    if (!currentChat) return;
-
-    try {
-        sendBtn.disabled = true;
-        let fileData = null;
-
-        if (selectedFile) {
-            fileData = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve({
-                    name: selectedFile.name,
-                    type: selectedFile.type,
-                    size: selectedFile.size,
+        try {
+            // Convert file to base64
+            const reader = new FileReader();
+            reader.onload = async function() {
+                currentFile = {
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
                     data: reader.result
-                });
-                reader.onerror = reject;
-                reader.readAsDataURL(selectedFile);
-            });
+                };
+
+                // Show preview
+                filePreview.innerHTML = `
+                    <div class="file-preview">
+                        <i class="fas ${getFileIcon(file.type)}"></i>
+                        <span class="file-info">${file.name} (${formatFileSize(file.size)})</span>
+                        <i class="fas fa-times remove-file"></i>
+                    </div>
+                `;
+                filePreview.classList.add('active');
+
+                // Add remove button handler
+                filePreview.querySelector('.remove-file').onclick = removeSelectedFile;
+            };
+            reader.readAsDataURL(file);
+        } catch (error) {
+            console.error('Error processing file:', error);
+            alert('Error processing file');
+            e.target.value = '';
         }
-
-        const message = {
-            text: messageText,
-            senderId: currentUser.uid,
-            timestamp: Date.now(),
-            file: fileData
-        };
-
-        await firebase.database().ref(`chats/${currentChat}/messages`).push(message);
-        
-        messageInput.value = '';
-        if (selectedFile) {
-            removeSelectedFile();
-        }
-    } catch (error) {
-        console.error('Error sending message:', error);
-        showStatusMessage('Failed to send message', 'error');
-    } finally {
-        sendBtn.disabled = false;
-    }
-}
-
-// Update the displayMessage function
-function displayMessage(message) {
-    if (displayedMessages.has(message.id)) return;
-    
-    const messagesDiv = document.getElementById('messages');
-    const messageElement = document.createElement('div');
-    messageElement.className = `message ${message.senderId === currentUser.uid ? 'sent' : 'received'}`;
-    
-    let messageContent = '';
-    
-    if (message.text) {
-        messageContent += `<div class="message-content">${message.text}</div>`;
-    }
-    
-    if (message.file) {
-        messageContent += `
-            <div class="file-attachment">
-                <i class="fas ${getFileIcon(message.file.type)} file-icon"></i>
-                <div class="file-info">
-                    <div class="file-name">${message.file.name}</div>
-                    <div class="file-size">${formatFileSize(message.file.size)}</div>
-                </div>
-                <button class="download-btn" onclick="downloadFile('${message.file.data}', '${message.file.name}')">
-                    <i class="fas fa-download"></i>
-                </button>
-            </div>
-        `;
-    }
-    
-    const formattedTime = new Date(message.timestamp).toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit'
     });
-    
-    messageContent += `<div class="message-time">${formattedTime}</div>`;
-    messageElement.innerHTML = messageContent;
-    
-    messagesDiv.appendChild(messageElement);
-    displayedMessages.add(message.id);
-    
-    if (isScrolledToBottom()) {
-        scrollToBottom();
+
+    // Update the sendMessage function to handle both text and files
+    async function sendMessage() {
+        const text = messageInput.value.trim();
+        
+        if (!text && !currentFile) return;
+        if (!chatRoomId) return;
+
+        try {
+            sendBtn.disabled = true;
+            
+            const message = {
+                text: text,
+                senderId: currentUser.uid,
+                timestamp: Date.now()
+            };
+
+            if (currentFile) {
+                message.file = currentFile;
+            }
+
+            await database.ref(`chatRooms/${chatRoomId}/messages`).push(message);
+            
+            // Clear inputs
+            messageInput.value = '';
+            if (currentFile) {
+                removeSelectedFile();
+            }
+            
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('Failed to send message');
+        } finally {
+            sendBtn.disabled = false;
+        }
     }
-}
 
-function downloadFile(dataUrl, fileName) {
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+    function removeSelectedFile() {
+        currentFile = null;
+        fileInput.value = '';
+        filePreview.innerHTML = '';
+        filePreview.classList.remove('active');
+    }
 
-function getFileIcon(fileType) {
-    if (fileType.startsWith('image/')) return 'fa-image';
-    if (fileType.includes('pdf')) return 'fa-file-pdf';
-    if (fileType.includes('word')) return 'fa-file-word';
-    if (fileType.includes('sheet') || fileType.includes('excel')) return 'fa-file-excel';
-    if (fileType.includes('text')) return 'fa-file-text';
-    return 'fa-file';
-}
+    // Update displayMessage to properly handle files
+    function displayMessage(message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+        messageDiv.classList.add(message.senderId === currentUser.uid ? 'sent' : 'received');
+        
+        let content = '';
+        
+        if (message.text) {
+            content += `<div class="message-content">${message.text}</div>`;
+        }
+        
+        if (message.file) {
+            content += `
+                <div class="file-attachment">
+                    <i class="fas ${getFileIcon(message.file.type)} file-icon"></i>
+                    <div class="file-info">
+                        <div class="file-name">${message.file.name}</div>
+                        <div class="file-size">${formatFileSize(message.file.size)}</div>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('${message.file.data}', '${message.file.name}')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            `;
+        }
+        
+        const time = new Date(message.timestamp).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        content += `<div class="message-time">${time}</div>`;
+        messageDiv.innerHTML = content;
+        
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Helper functions
+    function getFileIcon(fileType) {
+        if (fileType.startsWith('image/')) return 'fa-image';
+        if (fileType.includes('pdf')) return 'fa-file-pdf';
+        if (fileType.includes('word')) return 'fa-file-word';
+        if (fileType.includes('sheet') || fileType.includes('excel')) return 'fa-file-excel';
+        if (fileType.includes('text')) return 'fa-file-text';
+        return 'fa-file';
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 B';
+        const k = 1024;
+        const sizes = ['B', 'KB', 'MB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    }
+
+    // Make downloadFile available globally
+    window.downloadFile = function(dataUrl, fileName) {
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+});
