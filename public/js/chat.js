@@ -18,6 +18,156 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const database = firebase.database();
 
+
+// Add these at the start of your chat.js, after Firebase initialization
+let currentConnectionRequest = null;
+
+// Function to send connection request
+async function sendConnectionRequest(targetUserEmail) {
+    try {
+        const currentUser = firebase.auth().currentUser;
+        if (!currentUser) {
+            showMessage('You must be logged in to connect');
+            return;
+        }
+
+        // Create a new connection request in Firebase
+        const requestRef = firebase.database().ref('connectionRequests').push();
+        
+        await requestRef.set({
+            from: currentUser.email,
+            to: targetUserEmail,
+            status: 'pending',
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+
+        showMessage('Connection request sent!', 'success');
+
+    } catch (error) {
+        console.error('Error sending connection request:', error);
+        showMessage('Failed to send connection request');
+    }
+}
+
+// Function to handle incoming connection requests
+function listenForConnectionRequests() {
+    const currentUser = firebase.auth().currentUser;
+    if (!currentUser) return;
+
+    const requestsRef = firebase.database().ref('connectionRequests');
+    
+    requestsRef.on('child_added', async (snapshot) => {
+        const request = snapshot.val();
+        
+        // Check if this request is for current user and is pending
+        if (request.to === currentUser.email && request.status === 'pending') {
+            currentConnectionRequest = {
+                id: snapshot.key,
+                ...request
+            };
+            
+            showConnectionRequestModal(request.from);
+        }
+    });
+}
+
+// Function to show connection request modal
+function showConnectionRequestModal(fromEmail) {
+    const modal = document.getElementById('connectionRequestModal');
+    const message = document.getElementById('connectionRequestMessage');
+    
+    message.textContent = `${fromEmail} wants to connect with you`;
+    modal.style.display = 'block';
+}
+
+// Function to handle connection request response
+async function handleConnectionResponse(accepted) {
+    if (!currentConnectionRequest) return;
+
+    try {
+        const requestRef = firebase.database().ref(`connectionRequests/${currentConnectionRequest.id}`);
+        
+        if (accepted) {
+            // Update request status
+            await requestRef.update({
+                status: 'accepted'
+            });
+
+            // Create chat connection for both users
+            const chatId = generateChatId(currentConnectionRequest.from, currentConnectionRequest.to);
+            const chatRef = firebase.database().ref(`chats/${chatId}`);
+            
+            await chatRef.set({
+                participants: {
+                    [currentConnectionRequest.from.replace('.', '_')]: true,
+                    [currentConnectionRequest.to.replace('.', '_')]: true
+                },
+                createdAt: firebase.database.ServerValue.TIMESTAMP
+            });
+
+            showMessage('Connection accepted!', 'success');
+        } else {
+            // Update request status to rejected
+            await requestRef.update({
+                status: 'rejected'
+            });
+            showMessage('Connection request declined');
+        }
+
+    } catch (error) {
+        console.error('Error handling connection response:', error);
+        showMessage('Failed to process connection request');
+    } finally {
+        // Close modal and clear current request
+        const modal = document.getElementById('connectionRequestModal');
+        modal.style.display = 'none';
+        currentConnectionRequest = null;
+    }
+}
+
+// Utility function to generate a unique chat ID
+function generateChatId(email1, email2) {
+    const sortedEmails = [email1, email2].sort();
+    return `${sortedEmails[0]}_${sortedEmails[1]}`.replace(/\./g, '_');
+}
+
+// Add event listeners for the modal buttons
+document.addEventListener('DOMContentLoaded', () => {
+    const acceptBtn = document.getElementById('acceptConnection');
+    const rejectBtn = document.getElementById('rejectConnection');
+
+    if (acceptBtn) {
+        acceptBtn.addEventListener('click', () => handleConnectionResponse(true));
+    }
+
+    if (rejectBtn) {
+        rejectBtn.addEventListener('click', () => handleConnectionResponse(false));
+    }
+
+    // Start listening for connection requests
+    listenForConnectionRequests();
+});
+
+// Modify your existing connect function to use the new system
+function connectWithCode(code) {
+    // Assuming the code is the user's email
+    const targetEmail = code.trim();
+    
+    if (!targetEmail) {
+        showMessage('Please enter a valid connection code');
+        return;
+    }
+
+    if (targetEmail === firebase.auth().currentUser.email) {
+        showMessage('You cannot connect with yourself');
+        return;
+    }
+
+    // Send connection request
+    sendConnectionRequest(targetEmail);
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Chat page loaded");
     

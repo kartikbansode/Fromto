@@ -1,20 +1,23 @@
 {
   "rules": {
-    "users": {
+    "connectionRequests": {
       ".read": "auth != null",
-      "$uid": {
-        ".write": "$uid === auth.uid"
+      ".write": "auth != null",
+      "$requestId": {
+        ".validate": "newData.hasChildren(['from', 'to', 'status', 'timestamp'])",
+        "from": {
+          ".validate": "newData.val() === auth.email"
+        },
+        "status": {
+          ".validate": "newData.val() === 'pending' || newData.val() === 'accepted' || newData.val() === 'rejected'"
+        }
       }
     },
-    "userChats": {
-      ".read": "auth != null",
-      "$uid": {
-        ".write": "auth != null"
+    "chats": {
+      "$chatId": {
+        ".read": "auth != null && root.child('chats').child($chatId).child('participants').child(auth.email.replace('.', '_')).exists()",
+        ".write": "auth != null && (data.exists() ? data.child('participants').child(auth.email.replace('.', '_')).exists() : true)"
       }
-    },
-    "chatRooms": {
-      ".read": "auth != null",
-      ".write": "auth != null"
     }
   }
-} 
+}
