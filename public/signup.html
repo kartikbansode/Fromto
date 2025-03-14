@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Fromto Chat</title>
+    <link rel="stylesheet" href="https://kartikbansode.github.io/Fromto/public/css/signup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+</head>
+<body>
+    <div class="login-page">
+        <button class="back-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 12L12 3L21 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 15V21H5V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 21V15H15V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Home
+        </button>
+        
+        <div class="login-section">
+            <div class="login-container">
+                <!-- Message Display -->
+                <div id="message" class="message" style="display: none;"></div>
+                <div class="login-header">
+                    <div class="logo">
+                        <img src="https://kartikbansode.github.io/Fromto/assets/logo-white-full.png" alt="Your Logo">
+                    </div>
+                    <div class="text-content">
+                        <h2 class="login-title">Sign Up</h2>
+                        <p class="login-subtitle">Create your account to get started</p>
+                    </div>
+                </div>
+        
+                
+
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Create a password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                    </div>
+
+                    <div class="auth-buttons">
+                        <button type="submit" id="signupButton" class="btn btn-primary">
+                            Create Account
+                        </button>
+
+                        <div class="divider">
+                            <span>or</span>
+                        </div>
+
+                        <button type="button" id="googleSignup" class="btn btn-google">
+                            <img src="https://kartikbansode.github.io/Fromto/assets/google-icon.png" alt="Google" width="20">
+                            Sign up with Google
+                        </button>
+                    </div>
+                    
+                    <div class="additional-links">
+                        <p>
+                            Already have an account? <a href="https://kartikbansode.github.io/Fromto/public/login.html">Sign in</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Your custom JavaScript -->
+    <script src="https://kartikbansode.github.io/Fromto/public/js/signup.js"></script>
+</body>
+</html>

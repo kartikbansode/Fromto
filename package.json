@@ -1,0 +1,10 @@
+{
+  "name": "fromto",
+  "version": "1.0.0",
+  "description": "A simple real-time chat application",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server"
+  }
+} 

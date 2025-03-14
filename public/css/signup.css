@@ -1,0 +1,422 @@
+:root {
+    --primary-color: #4285f4;
+    --secondary-color: #34a853;
+    --accent-color: #7c3aed;
+    --surface-color: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-page {
+    display: flex;
+    max-height: max-content;
+}
+
+.login-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background: #f8fafc;
+}
+
+.login-container {
+    width: 500px;
+    padding: 2.5rem;
+    background: var(--surface-color);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* All other CSS classes remain exactly the same as login.css */
+/* Including form-group, buttons, dividers, etc. */
+/* Just copy the rest of login.css as is */
+
+
+/* Add these new styles for consistent width */
+.login-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    width: 30%;
+    height: auto;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.text-content {
+    flex: 1;
+}
+
+.login-title {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    text-align: right;
+}
+
+.login-subtitle {
+    margin-top: 5px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+    position: relative; /* Added for error positioning */
+    width: 100%;
+}
+
+.form-container {
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Added to include padding in width */
+}
+
+
+.form-group input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    outline: none;
+}
+
+
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+/* Container styles */
+p .forgot-password{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin: -0.5rem 0 1.5rem 0;
+    padding: 0;
+}
+
+/* Forgot password link styles */
+.forgot-password {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.forgot-password:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Focus state */
+.forgot-password:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+}
+
+.btn {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-sizing: border-box; /* Added to include padding in width */
+}
+.btn-primary {
+    background: linear-gradient(45deg, #4f46e5, #7c3aed);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.btn-google {
+    background: white;
+    border: 2px solid #e2e8f0;
+    color: var(--text-primary);
+}
+
+.btn-google:hover {
+    background: #f8fafc;
+}
+
+.divider {
+    width: 100%;
+    text-align: center;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.divider span {
+    background: white;
+    padding: 0 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.additional-links {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.additional-links a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.additional-links a:hover {
+    text-decoration: underline;
+}
+
+/* Update error message styles */
+.message {
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    animation: slideIn 0.4s ease;
+    z-index: 1;
+    width: 85%;
+    text-align: center;
+}
+
+
+.message.error {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    display: block; /* Show error messages */
+}
+.message.success {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        width: 90%;
+        max-width: 400px;
+        padding: 1.5rem;
+    }
+    
+    .message {
+        position: static;
+        width: 100%;
+        margin-top: 0.5rem;
+        transform: none;
+    }
+}
+
+
+
+
+/* Back Button Enhanced Styles */
+.back-button {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: white;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.back-button:hover {
+    background: #f8fafc;
+    transform: translateX(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.back-button:active {
+    transform: translateX(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.back-button svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+}
+
+.back-button:hover svg {
+    transform: translateX(-2px);
+}
+
+/* SVG color */
+.back-button svg path {
+    stroke: var(--text-primary);
+    transition: stroke 0.2s ease;
+}
+
+/* Focus state for accessibility */
+.back-button:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+/* Dark mode support (if needed) */
+@media (prefers-color-scheme: dark) {
+    .back-button {
+        background: #1f2937;
+        border-color: #374151;
+        color: #f3f4f6;
+    }
+
+    .back-button:hover {
+        background: #2d3748;
+    }
+
+    .back-button svg path {
+        stroke: #f3f4f6;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .back-button {
+        top: 1.5rem;
+        left: 1.5rem;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .back-button svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .back-button {
+        top: 1rem;
+        left: 1rem;
+        padding: 8px 12px;
+    }
+    
+    .back-button svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Optional: Add loading state */
+.back-button.loading {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+/* Optional: Add disabled state */
+.back-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background: #f3f4f6;
+}
+
