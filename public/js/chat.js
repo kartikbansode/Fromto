@@ -1,3 +1,14 @@
+// Firebase configuration should be the same as in auth.js
+const firebaseConfig = {
+    apiKey: "AIzaSyChYiTejtDAXaLTH0nCjKuJwR6_PvW6xMc",
+    authDomain: "fromto-72f98.firebaseapp.com",
+    projectId: "fromto-72f98",
+    storageBucket: "fromto-72f98.firebasestorage.app",
+    messagingSenderId: "907173125159",
+    appId: "1:907173125159:web:f35416f73900eaa8078202"
+};
+let messageListeners = {};
+const displayedMessages = new Set();
 
 // Initialize Firebase if not already initialized
 if (!firebase.apps.length) {
@@ -23,7 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // App state
     let currentUser = null;
+    let userCode = null;
     let chatRoomId = null;
+    let messageListener = null;
 
     // Disable buttons initially
     copyCodeBtn.disabled = true;
@@ -142,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="message-content">${message.text}</div>
             <div class="message-time">${timeString}</div>
         `;
-
+        
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
@@ -212,32 +225,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Send message
-    async function sendMessage() {
+    function sendMessage() {
         const text = messageInput.value.trim();
         
-        if (!text) return;
-        if (!chatRoomId) return;
+        if (!text || !chatRoomId) return;
 
-        try {
-            sendBtn.disabled = true;
-            
-            const message = {
-                text: text,
-                senderId: currentUser.uid,
-                timestamp: Date.now()
-            };
+        const message = {
+            text: text,
+            senderId: currentUser.uid,
+            timestamp: Date.now()
+        };
 
-            await database.ref(`chatRooms/${chatRoomId}/messages`).push(message);
-            
-            // Clear inputs
-            messageInput.value = '';
-            
-        } catch (error) {
-            console.error('Error sending message:', error);
-            alert('Failed to send message');
-        } finally {
-            sendBtn.disabled = false;
-        }
+        // Disable send button while sending
+        sendBtn.disabled = true;
+
+        database.ref(`chatRooms/${chatRoomId}/messages`).push(message)
+            .then(() => {
+                messageInput.value = '';
+                messageInput.focus();
+            })
+            .catch(error => {
+                console.error('Error sending message:', error);
+                alert('Failed to send message. Please try again.');
+            })
+            .finally(() => {
+                sendBtn.disabled = false;
+            });
     }
 
     // Send message event listeners
@@ -271,4 +284,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize chat
     initializeChat();
-});
+}); 
