@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
           showMessage('Login successful! Redirecting...', 'success');
           setTimeout(() => {
-            window.location.href = '/public/chat.html';
+            window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
           }, 1500);
   
         } catch (error) {
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
           showMessage('Login successful! Redirecting...', 'success');
           setTimeout(() => {
-            window.location.href = '/public/chat.html';
+            window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
           }, 1500);
   
         } catch (error) {
@@ -186,7 +186,7 @@ if (forgotPasswordLink) {
         try {
             // Try to send the reset email directly
             await firebase.auth().sendPasswordResetEmail(email, {
-                url: window.location.origin + '/public/login.html'
+                url: window.location.origin + 'https://kartikbansode.github.io/Fromto/public/login.html'
             });
             
             // If we get here, the email exists and reset email was sent
@@ -239,13 +239,13 @@ function showMessage(message, type = 'error') {
   
     const backButton = document.querySelector('.back-button');
     backButton.addEventListener('click', function () {
-      window.location.href = '/public/index.html';
+      window.location.href = 'https://kartikbansode.github.io/Fromto/public/index.html';
     });
   
     // Check if user is already signed in
     firebase.auth().onAuthStateChanged((user) => {
       if (user && user.emailVerified) {
-        window.location.href = '/public/chat.html';
+        window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
       }
     });
   });

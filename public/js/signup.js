@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (verificationDiv) {
                     showVerificationSuccess();
                 } else {
-                    safeRedirect('/public/chat.html');
+                    safeRedirect('https://kartikbansode.github.io/Fromto/public/chat.html');
                 }
             } else {
                 showVerificationStatus(user.email);
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             // Redirect after showing success message
             setTimeout(() => {
-                window.location.href = '/public/chat.html';
+                window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
             }, 2000);
         }, 100);
     }
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p class="email-address">${email}</p>
                 <p>Please check your inbox and click the verification link.</p>
                 <div class="warning-message">
-                    <p>⚠️ Please do not refresh or reload this page.<br>If you do not get automatically redirected <a href="/public/login.html">click here</a></p>
+                    <p>⚠️ Please do not refresh or reload this page.<br>If you do not get automatically redirected <a href="https://kartikbansode.github.io/Fromto/public/login.html">click here</a></p>
                 </div>
                 <div id="resendContainer">
                     <button id="resendButton" class="resend-button" disabled>
@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             .then(() => firebase.auth().signOut())
                             .then(() => {
                                 setTimeout(() => {
-                                    window.location.href = '/public/signup.html';
+                                    window.location.href = 'https://kartikbansode.github.io/Fromto/public/signup.html';
                                 }, 3000);
                             })
                             .catch(error => console.error('Error deleting user:', error));

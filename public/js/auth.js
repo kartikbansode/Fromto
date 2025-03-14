@@ -16,7 +16,7 @@ const auth = firebase.auth();
 const database = firebase.database();
 
 // Get current page
-const currentPage = window.location.pathname.split('/').pop() || '/public/index.html';
+const currentPage = window.location.pathname.split('/').pop() || 'https://kartikbansode.github.io/Fromto/public/index.html';
 
 // Handle authentication state changes
 auth.onAuthStateChanged(user => {
@@ -33,21 +33,21 @@ auth.onAuthStateChanged(user => {
     
     if (user) {
         // User is signed in
-        if (currentPage === 'login.html' || currentPage === '/public/index.html' || currentPage === '') {
+        if (currentPage === 'login.html' || currentPage === 'https://kartikbansode.github.io/Fromto/public/index.html' || currentPage === '') {
             console.log("Redirecting to chat.html");
-            window.location.replace('/public/chat.html');
+            window.location.replace('https://kartikbansode.github.io/Fromto/public/chat.html');
         }
     } else {
         // User is signed out
         if (currentPage === '/public/chat.html') {
             console.log("Redirecting to login.html");
-            window.location.replace('/public/login.html');
+            window.location.replace('https://kartikbansode.github.io/Fromto/public/login.html');
         }
     }
 });
 
 // Only run the login page code if we're actually on the login page
-if (currentPage === '/public/login.html') {
+if (currentPage === 'https://kartikbansode.github.io/Fromto/public/login.html') {
     const authForm = document.getElementById('auth-form');
     const authTitle = document.getElementById('auth-title');
     const toggleLink = document.getElementById('toggle-link');

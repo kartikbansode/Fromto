@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fromto Chat</title>
-    <link rel="stylesheet" href="/public/css/common.css">
-    <link rel="stylesheet" href="/public/css/chat.css">
+    <link rel="stylesheet" href="https://kartikbansode.github.io/Fromto/public/css/common.css">
+    <link rel="stylesheet" href="https://kartikbansode.github.io/Fromto/public/css/chat.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
@@ -557,7 +557,7 @@
             <button id="mobileMenuToggle" class="mobile-menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
-            <img src="/assets/logo-white-full.png" alt="" srcset="">
+            <img src="https://kartikbansode.github.io/Fromto/assets/logo-white-full.png" alt="" srcset="">
         </div>
         <div class="chat-actions">
             <div class="connection-status online" id="connectionStatus" title="Online"></div>
@@ -625,7 +625,7 @@
                 <div class="messages" id="messages">
                     <div class="welcome-message">
                         <div class="welcome-icon">
-                            <img src="/assets/logo-white-single.png" alt="Fromto Logo" class="fromto-logo">
+                            <img src="https://kartikbansode.github.io/Fromto/assets/logo-white-single.png" alt="Fromto Logo" class="fromto-logo">
                         </div>
                         <h3>Welcome to Fromto Chat</h3>
                         <p>Connect with a user using their code to
@@ -732,7 +732,7 @@
 
 
 
-    <script src="/public/js/firebase-config.js"></script>
+    <script src="https://kartikbansode.github.io/Fromto/public/js/firebase-config.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Your existing code...
@@ -763,7 +763,7 @@
 
         // Authentication check
         firebase.auth().onAuthStateChanged((user) => {
-            if (!user) window.location.href = '/public/login.html';
+            if (!user) window.location.href = 'https://kartikbansode.github.io/Fromto/public/login.html';
             currentUser = user;
             document.getElementById('userEmail').textContent = user.email;
             setupUserCode();
@@ -812,7 +812,7 @@
     document.getElementById('messages').innerHTML = `
         <div class="welcome-message">
             <div class="welcome-icon">
-                <img src="/assets/logo-white-single.png" alt="Fromto Logo" class="fromto-logo">
+                <img src="https://kartikbansode.github.io/Fromto/assets/logo-white-single.png" alt="Fromto Logo" class="fromto-logo">
             </div>
             <h3>Welcome to Fromto Chat</h3>
             <p>Connect with a user using their code to start chatting securely.</p>
@@ -1557,8 +1557,8 @@
             }
         });
     </script>
-    <script src="/public/js/firebase-config.js"></script>
-    <script src="/public/js/chat.js"></script>
+    <script src="https://kartikbansode.github.io/Fromto/public/js/firebase-config.js"></script>
+    <script src="https://kartikbansode.github.io/Fromto/public/js/chat.js"></script>
 </body>
 
 </html>
