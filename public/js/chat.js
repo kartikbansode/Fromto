@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentFile = null;
 
     // Remove duplicate event listeners and consolidate file handling
-    fileInput.addEventListener('change', async function(e) {
+    document.getElementById('fileInput').addEventListener('change', async function(e) {
         const file = e.target.files[0];
         if (!file) return;
 
@@ -427,33 +427,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            // Convert file to base64
-            const reader = new FileReader();
-            reader.onload = async function() {
-                currentFile = {
-                    name: file.name,
-                    type: file.type,
-                    size: file.size,
-                    data: reader.result
-                };
-
-                // Show preview
-                filePreview.innerHTML = `
-                    <div class="file-preview">
-                        <i class="fas ${getFileIcon(file.type)}"></i>
-                        <span class="file-info">${file.name} (${formatFileSize(file.size)})</span>
-                        <i class="fas fa-times remove-file"></i>
-                    </div>
-                `;
-                filePreview.classList.add('active');
-
-                // Add remove button handler
-                filePreview.querySelector('.remove-file').onclick = removeSelectedFile;
+            // Upload the file to file.io (free file hosting)
+            const formData = new FormData();
+            formData.append('file', file);
+            const response = await fetch('https://file.io/?expires=1w', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            if (!result.success) {
+                throw new Error('Upload failed');
+            }
+            currentFile = {
+                name: file.name,
+                type: file.type,
+                size: file.size,
+                url: result.link
             };
-            reader.readAsDataURL(file);
+            // Show preview in chat UI
+            filePreview.innerHTML = `
+                <div class="file-preview">
+                    <i class="fas ${getFileIcon(file.type)}"></i>
+                    <span class="file-info">${file.name} (${formatFileSize(file.size)})</span>
+                    <i class="fas fa-times remove-file"></i>
+                </div>
+            `;
+            filePreview.classList.add('active');
+            filePreview.querySelector('.remove-file').onclick = removeSelectedFile;
         } catch (error) {
-            console.error('Error processing file:', error);
-            alert('Error processing file');
+            console.error('Error uploading file:', error);
+            alert('Error uploading file');
             e.target.value = '';
         }
     });
