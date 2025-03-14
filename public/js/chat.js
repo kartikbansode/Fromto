@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let messageListener = null;
 
     // Disable buttons initially
-    copyCodeBtn.disabled = true;
+  
     connectBtn.disabled = true;
 
     // Initialize chat interface
