@@ -1,5 +1,3 @@
-let messageListeners = {};
-const displayedMessages = new Set();
 
 // Initialize Firebase if not already initialized
 if (!firebase.apps.length) {
