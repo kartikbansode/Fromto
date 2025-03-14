@@ -1,12 +1,7 @@
+document.addEventListener('DOMContentLoaded', function () {
 
-let messageListeners = {};
-const displayedMessages = new Set();
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
     console.log("Chat page loaded");
-    
+
     // DOM Elements
     const userCodeElement = document.getElementById('user-code');
     const copyCodeBtn = document.getElementById('copy-code');
@@ -27,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Disable buttons initially
     copyCodeBtn.disabled = true;
     connectBtn.disabled = true;
-    
+
     // Initialize chat interface
     function initializeChat() {
         auth.onAuthStateChanged(async (user) => {
@@ -134,14 +129,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message');
         messageDiv.classList.add(message.senderId === currentUser.uid ? 'sent' : 'received');
-        
+
         const timeString = new Date(message.timestamp).toLocaleTimeString();
-        
+
         messageDiv.innerHTML = `
             <div class="message-content">${message.text}</div>
             <div class="message-time">${timeString}</div>
         `;
-        
+
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
@@ -169,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .orderByChild('userCode')
                 .equalTo(targetCode)
                 .once('value');
-            
+
             const users = usersSnapshot.val();
 
             if (!users) {
@@ -213,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Send message
     function sendMessage() {
         const text = messageInput.value.trim();
-        
+
         if (!text || !chatRoomId) return;
 
         const message = {

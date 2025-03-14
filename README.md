@@ -4,7 +4,7 @@ Fromto is a secure, real-time chat application built with Firebase, designed for
 
 ---
 
-📌 **Latest Release: v1.1**     <a href="https://kartikbansode.github.io/Fromto/public/">*View*</a>
+📌 **Latest Release: v1.0**     <a href="https://kartikbansode.github.io/Fromto/public/">*View*</a>
 
 ---
 ## Features  
