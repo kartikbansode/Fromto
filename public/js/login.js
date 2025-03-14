@@ -133,7 +133,122 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     }
-  
+    // Add this to your existing login.js file
+document.addEventListener('DOMContentLoaded', function() {
+  // Get modal elements
+  const modal = document.getElementById('forgotPasswordModal');
+  const forgotPasswordLink = document.getElementById('forgotPassword');
+  const closeButton = document.querySelector('.close-button');
+  const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+  const resetEmailInput = document.getElementById('resetEmail');
+
+  // Show modal when clicking forgot password link
+  forgotPasswordLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'block';
+      // Pre-fill email if it's already entered in the login form
+      const loginEmail = document.getElementById('email').value;
+      if (loginEmail) {
+          resetEmailInput.value = loginEmail;
+      }
+  });
+
+  // Close modal when clicking the close button
+  closeButton.addEventListener('click', () => {
+      modal.style.display = 'none';
+  });
+
+  // Close modal when clicking outside
+  window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+          modal.style.display = 'none';
+      }
+  });
+
+  // Handle forgot password form submission
+  forgotPasswordForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = resetEmailInput.value.trim();
+      const submitButton = forgotPasswordForm.querySelector('button[type="submit"]');
+      
+      if (!email) {
+          showMessage('Please enter your email address');
+          return;
+      }
+
+      try {
+          // Disable the submit button
+          submitButton.disabled = true;
+          submitButton.textContent = 'Sending...';
+
+          // Send password reset email
+          await firebase.auth().sendPasswordResetEmail(email, {
+              url: 'https://kartikbansode.github.io/Fromto/public/login.html'
+          });
+
+          // Show success message
+          showMessage('Password reset email sent! Please check your inbox.', 'success');
+          
+          // Close the modal after short delay
+          setTimeout(() => {
+              modal.style.display = 'none';
+          }, 2000);
+
+      } catch (error) {
+          console.error('Password reset error:', error);
+          
+          let errorMessage;
+          switch (error.code) {
+              case 'auth/user-not-found':
+                  errorMessage = 'No account found with this email address';
+                  break;
+              case 'auth/invalid-email':
+                  errorMessage = 'Please enter a valid email address';
+                  break;
+              case 'auth/too-many-requests':
+                  errorMessage = 'Too many attempts. Please try again later';
+                  break;
+              default:
+                  errorMessage = 'Error sending reset email. Please try again';
+          }
+          showMessage(errorMessage);
+      } finally {
+          // Re-enable the submit button
+          submitButton.disabled = false;
+          submitButton.textContent = 'Send Reset Link';
+      }
+  });
+
+  // Enhanced showMessage function with better visibility
+  function showMessage(message, type = 'error') {
+      const messageDiv = document.getElementById('message');
+      if (!messageDiv) return;
+
+      // Clear any existing timeout
+      if (window.messageTimeout) {
+          clearTimeout(window.messageTimeout);
+      }
+
+      // Update message
+      messageDiv.textContent = message;
+      messageDiv.className = `message ${type}`;
+      messageDiv.style.display = 'block';
+      messageDiv.style.opacity = '1';
+
+      // Ensure message is visible
+      messageDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Auto hide after 5 seconds
+      window.messageTimeout = setTimeout(() => {
+          messageDiv.style.opacity = '0';
+          setTimeout(() => {
+              messageDiv.style.display = 'none';
+          }, 300);
+      }, 5000);
+  }
+});
+
     // Handle Google Sign In
     if (googleButton) {
       googleButton.addEventListener('click', async () => {
