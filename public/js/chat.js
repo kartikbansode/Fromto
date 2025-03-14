@@ -1,197 +1,367 @@
-// Firebase configuration - use your actual config
-const firebaseConfig = {
-    apiKey: "AIzaSyChYiTejtDAXaLTH0nCjKuJwR6_PvW6xMc",
-    authDomain: "fromto-72f98.firebaseapp.com",
-    projectId: "fromto-72f98",
-    storageBucket: "fromto-72f98.firebasestorage.app",
-    messagingSenderId: "907173125159",
-    appId: "1:907173125159:web:f35416f73900eaa8078202"
-  };
+document.addEventListener('DOMContentLoaded', function () {
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyChYiTejtDAXaLTH0nCjKuJwR6_PvW6xMc",
+        authDomain: "fromto-72f98.firebaseapp.com",
+        projectId: "fromto-72f98",
+        storageBucket: "fromto-72f98.firebasestorage.app",
+        messagingSenderId: "907173125159",
+        appId: "1:907173125159:web:f35416f73900eaa8078202"
+    };
 
-// Initialize Firebase if not already initialized
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
 
-const auth = firebase.auth();
-const database = firebase.database();
-
-// Global variables
-let currentConnectionRequest = null;
-let messageListeners = {};
-const displayedMessages = new Set();
-
-// Function to show messages
-function showMessage(message, type = 'error') {
+    // Get DOM elements
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginButton = document.getElementById('loginButton');
+    // Updated to match the HTML element id "googleLogin"
+    const googleButton = document.getElementById('googleLogin');
     const messageDiv = document.getElementById('message');
-    if (!messageDiv) return;
 
-    messageDiv.textContent = message;
-    messageDiv.className = `message ${type}`;
-    messageDiv.style.display = 'block';
+    // Function to show messages
+    function showMessage(message, type = 'error') {
+        const messageDiv = document.getElementById('message');
+        if (messageDiv) {
+            // Clear any existing timeout
+            if (window.messageTimeout) {
+                clearTimeout(window.messageTimeout);
+            }
 
-    setTimeout(() => {
-        messageDiv.style.display = 'none';
-    }, 5000);
-}
+            // Show message
+            messageDiv.textContent = message;
+            messageDiv.className = message ${ type };
+            messageDiv.style.display = 'block';
 
-// Function to send connection request
-async function sendConnectionRequest(targetUserEmail) {
-    try {
-        const currentUser = firebase.auth().currentUser;
-        if (!currentUser) {
-            showMessage('You must be logged in to connect');
-            return;
+            // Scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            // Auto hide after 3 seconds
+            window.messageTimeout = setTimeout(() => {
+                messageDiv.style.opacity = '0';
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                    messageDiv.style.opacity = '1';
+                }, 300);
+            }, 3000);
         }
+    }
 
-        // Create a new connection request
-        const requestRef = database.ref('connectionRequests').push();
-        
-        await requestRef.set({
-            from: currentUser.email,
-            to: targetUserEmail,
-            status: 'pending',
-            timestamp: firebase.database.ServerValue.TIMESTAMP
+    // Function to set loading state
+    function setLoading(button, isLoading) {
+        if (!button) return; // Guard clause
+        button.disabled = isLoading;
+        button.innerHTML = isLoading ? 'Please wait...' : button.dataset.originalText || 'Login';
+    }
+
+    // Save original button text
+    if (loginButton) loginButton.dataset.originalText = loginButton.innerHTML;
+    if (googleButton) googleButton.dataset.originalText = googleButton.innerHTML;
+
+    // Handle Email/Password Login
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!email || !password) {
+                showMessage('Please fill in all fields');
+                return;
+            }
+
+            try {
+                setLoading(loginButton, true);
+                const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                if (!user.emailVerified) {
+                    setLoading(loginButton, false);
+                    showMessage('Please verify your email before logging in. Check your inbox.');
+
+                    // Create resend verification button
+                    const resendButton = document.createElement('button');
+                    resendButton.textContent = 'Resend verification email';
+                    resendButton.className = 'resend-button';
+                    resendButton.onclick = async () => {
+                        try {
+                            await user.sendEmailVerification();
+                            showMessage('Verification email resent!', 'success');
+                        } catch (error) {
+                            showMessage('Error sending verification email');
+                        }
+                    };
+                    messageDiv.appendChild(resendButton);
+
+                    await firebase.auth().signOut();
+                    return;
+                }
+
+                showMessage('Login successful! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('Login error:', error);
+                setLoading(loginButton, false);
+
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        showMessage('No account found with this email');
+                        break;
+                    case 'auth/wrong-password':
+                        showMessage('Incorrect password');
+                        break;
+                    case 'auth/invalid-email':
+                        showMessage('Invalid email address');
+                        break;
+                    case 'auth/too-many-requests':
+                        showMessage('Too many attempts. Please try again later');
+                        break;
+                    default:
+                        showMessage('Login failed. Please try again');
+                }
+            }
+        });
+    }
+    // Add this to your existing login.js file
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get modal elements
+        const modal = document.getElementById('forgotPasswordModal');
+        const forgotPasswordLink = document.getElementById('forgotPassword');
+        const closeButton = document.querySelector('.close-button');
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        const resetEmailInput = document.getElementById('resetEmail');
+
+        // Show modal when clicking forgot password link
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.style.display = 'block';
+            // Pre-fill email if it's already entered in the login form
+            const loginEmail = document.getElementById('email').value;
+            if (loginEmail) {
+                resetEmailInput.value = loginEmail;
+            }
         });
 
-        showMessage('Connection request sent!', 'success');
+        // Close modal when clicking the close button
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
 
-    } catch (error) {
-        console.error('Error sending connection request:', error);
-        showMessage('Failed to send connection request');
-    }
-}
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
 
-// Function to listen for connection requests
-function listenForConnectionRequests() {
-    const currentUser = auth.currentUser;
-    if (!currentUser) return;
+        // Handle forgot password form submission
+        forgotPasswordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    const requestsRef = database.ref('connectionRequests');
-    
-    requestsRef.on('child_added', async (snapshot) => {
-        const request = snapshot.val();
-        
-        // Check if this request is for current user and is pending
-        if (request.to === currentUser.email && request.status === 'pending') {
-            currentConnectionRequest = {
-                id: snapshot.key,
-                ...request
-            };
-            
-            showConnectionRequestModal(request.from);
+            const email = resetEmailInput.value.trim();
+            const submitButton = forgotPasswordForm.querySelector('button[type="submit"]');
+
+            if (!email) {
+                showMessage('Please enter your email address');
+                return;
+            }
+
+            try {
+                // Disable the submit button
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
+
+                // Send password reset email
+                await firebase.auth().sendPasswordResetEmail(email, {
+                    url: 'https://kartikbansode.github.io/Fromto/public/login.html'
+                });
+
+                // Show success message
+                showMessage('Password reset email sent! Please check your inbox.', 'success');
+
+                // Close the modal after short delay
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 2000);
+
+            } catch (error) {
+                console.error('Password reset error:', error);
+
+                let errorMessage;
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage = 'No account found with this email address';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Please enter a valid email address';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Too many attempts. Please try again later';
+                        break;
+                    default:
+                        errorMessage = 'Error sending reset email. Please try again';
+                }
+                showMessage(errorMessage);
+            } finally {
+                // Re-enable the submit button
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Reset Link';
+            }
+        });
+
+        // Enhanced showMessage function with better visibility
+        function showMessage(message, type = 'error') {
+            const messageDiv = document.getElementById('message');
+            if (!messageDiv) return;
+
+            // Clear any existing timeout
+            if (window.messageTimeout) {
+                clearTimeout(window.messageTimeout);
+            }
+
+            // Update message
+            messageDiv.textContent = message;
+            messageDiv.className = message ${ type };
+            messageDiv.style.display = 'block';
+            messageDiv.style.opacity = '1';
+
+            // Ensure message is visible
+            messageDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Auto hide after 5 seconds
+            window.messageTimeout = setTimeout(() => {
+                messageDiv.style.opacity = '0';
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 300);
+            }, 5000);
         }
     });
-}
 
-// Function to show connection request modal
-function showConnectionRequestModal(fromEmail) {
-    const modal = document.getElementById('connectionRequestModal');
-    const message = document.getElementById('connectionRequestMessage');
-    
-    message.textContent = `${fromEmail} wants to connect with you`;
-    modal.style.display = 'block';
-}
+    // Handle Google Sign In
+    if (googleButton) {
+        googleButton.addEventListener('click', async () => {
+            try {
+                setLoading(googleButton, true);
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const result = await firebase.auth().signInWithPopup(provider);
+                const user = result.user;
 
-// Function to handle connection response
-async function handleConnectionResponse(accepted) {
-    if (!currentConnectionRequest) return;
+                showMessage('Login successful! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
+                }, 1500);
 
-    try {
-        const requestRef = database.ref(`connectionRequests/${currentConnectionRequest.id}`);
-        
-        if (accepted) {
-            // Update request status
-            await requestRef.update({
-                status: 'accepted'
-            });
+            } catch (error) {
+                console.error('Google sign-in error:', error);
+                setLoading(googleButton, false);
 
-            // Create chat connection
-            const chatId = generateChatId(currentConnectionRequest.from, currentConnectionRequest.to);
-            const chatRef = database.ref(`chats/${chatId}`);
-            
-            await chatRef.set({
-                participants: {
-                    [currentConnectionRequest.from.replace('.', '_')]: true,
-                    [currentConnectionRequest.to.replace('.', '_')]: true
-                },
-                createdAt: firebase.database.ServerValue.TIMESTAMP
-            });
-
-            showMessage('Connection accepted!', 'success');
-            
-            // Reload the page to show the new chat
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
-        } else {
-            // Update request status to rejected
-            await requestRef.update({
-                status: 'rejected'
-            });
-            showMessage('Connection request declined');
-        }
-
-    } catch (error) {
-        console.error('Error handling connection response:', error);
-        showMessage('Failed to process connection request');
-    } finally {
-        // Close modal and clear current request
-        const modal = document.getElementById('connectionRequestModal');
-        modal.style.display = 'none';
-        currentConnectionRequest = null;
-    }
-}
-
-// Utility function to generate chat ID
-function generateChatId(email1, email2) {
-    const sortedEmails = [email1, email2].sort();
-    return `${sortedEmails[0]}_${sortedEmails[1]}`.replace(/\./g, '_');
-}
-
-// Modified connect function
-function connectWithCode(code) {
-    const targetEmail = code.trim();
-    
-    if (!targetEmail) {
-        showMessage('Please enter a valid connection code');
-        return;
-    }
-
-    if (targetEmail === auth.currentUser.email) {
-        showMessage('You cannot connect with yourself');
-        return;
-    }
-
-    // Send connection request
-    sendConnectionRequest(targetEmail);
-}
-
-// Document ready event listener
-document.addEventListener('DOMContentLoaded', function() {
-    // Get DOM elements
-    const connectInput = document.getElementById('connect-input');
-    const connectBtn = document.getElementById('connect-btn');
-    const acceptBtn = document.getElementById('acceptConnection');
-    const rejectBtn = document.getElementById('rejectConnection');
-
-    // Add event listeners
-    if (connectBtn) {
-        connectBtn.addEventListener('click', () => {
-            if (connectInput) {
-                connectWithCode(connectInput.value);
+                switch (error.code) {
+                    case 'auth/popup-blocked':
+                        showMessage('Please allow popups for this website');
+                        break;
+                    case 'auth/popup-closed-by-user':
+                        showMessage('Login cancelled. Please try again');
+                        break;
+                    default:
+                        showMessage('Google sign-in failed. Please try again');
+                }
             }
         });
     }
 
-    if (acceptBtn) {
-        acceptBtn.addEventListener('click', () => handleConnectionResponse(true));
+    // Handle Forgot Password
+    // Handle Forgot Password
+    const forgotPasswordLink = document.getElementById('forgotPassword');
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                showMessage('Please enter your email address');
+                emailInput.focus();
+                return;
+            }
+
+            // Disable the button to prevent multiple clicks
+            forgotPasswordLink.style.pointerEvents = 'none';
+
+            try {
+                // Try to send the reset email directly
+                await firebase.auth().sendPasswordResetEmail(email, {
+                    url: 'https://kartikbansode.github.io/Fromto/public/login.html'
+                });
+
+
+                // If we get here, the email exists and reset email was sent
+                showMessage('If an account exists for the email address you entered, we have sent password reset instructions. Please check your inbox.', 'success');
+            } catch (error) {
+                console.error('Password reset error:', error);
+
+                // Handle specific error cases
+                if (error.code === 'auth/user-not-found') {
+                    showMessage('No account found with this email address');
+                } else if (error.code === 'auth/invalid-email') {
+                    showMessage('Please enter a valid email address');
+                } else if (error.code === 'auth/too-many-requests') {
+                    showMessage('Too many attempts. Please try again later');
+                } else {
+                    showMessage('Error sending reset email. Please try again.');
+                }
+            } finally {
+                // Re-enable the button
+                forgotPasswordLink.style.pointerEvents = 'auto';
+            }
+        });
     }
 
-    if (rejectBtn) {
-        rejectBtn.addEventListener('click', () => handleConnectionResponse(false));
+    // Update showMessage function to be more reliable
+    function showMessage(message, type = 'error') {
+        const messageDiv = document.getElementById('message');
+        if (!messageDiv) return;
+
+        // Clear any existing timeout
+        if (window.messageTimeout) {
+            clearTimeout(window.messageTimeout);
+        }
+
+        // Update message
+        messageDiv.textContent = message;
+        messageDiv.className = message ${ type };
+        messageDiv.style.display = 'block';
+        messageDiv.style.opacity = '1';
+
+        // Auto hide after 3 seconds
+        window.messageTimeout = setTimeout(() => {
+            messageDiv.style.opacity = '0';
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 300);
+        }, 3000);
     }
 
-    // Start listening for connection requests
-    listenForConnectionRequests();
+
+    const backButton = document.querySelector('.back-button');
+    backButton.addEventListener('click', function () {
+        window.location.href = 'https://kartikbansode.github.io/Fromto/public/index.html';
+    });
+
+    // Check if user is already signed in
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user && user.emailVerified) {
+            window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
+        }
+    });
 });
