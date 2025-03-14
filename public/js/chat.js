@@ -2,10 +2,6 @@
 let messageListeners = {};
 const displayedMessages = new Set();
 
-// Initialize Firebase if not already initialized
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
 
 const auth = firebase.auth();
 const database = firebase.database();
