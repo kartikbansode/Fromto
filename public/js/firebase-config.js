@@ -15,7 +15,6 @@ if (!firebase.apps.length) {
 }
 
 // Initialize Firebase Storage
-const storage = firebase.storage();
 const storageRef = storage.ref();   
 // Create global references to Firebase services
 const auth = firebase.auth();
