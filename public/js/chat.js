@@ -3,8 +3,6 @@ let messageListeners = {};
 const displayedMessages = new Set();
 
 
-const auth = firebase.auth();
-const database = firebase.database();
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Chat page loaded");
