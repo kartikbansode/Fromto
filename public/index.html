@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fromto - Modern Real-Time Collaboration</title>
+
+
+    <!-- Font Awesome Icons - Direct CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo-container">
+                    <img src="/assets/logo-white-full.png" alt="Fromto Logo" class="logo-img">
+                </div>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="/public/login.html" class="nav-link nav-cta">Get Started →</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <div class="auth-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Connect & Collaborate<br>in Real-Time</h1>
+                    <p class="hero-subtitle">Secure enterprise-grade messaging platform with end-to-end encryption and seamless team collaboration features</p>
+                    
+                    <div class="cta-section">
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <i class="fas fa-bolt feature-icon"></i>
+                                <span>Instant Messaging</span>
+                                <p class="feature-desc">Lightning-fast communication</p>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shield-halved feature-icon"></i>
+                                <span>Military-Grade Security</span>
+                                <p class="feature-desc">End-to-end encryption</p>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-users feature-icon"></i>
+                                <span>Team Spaces</span>
+                                <p class="feature-desc">Collaborative workspaces</p>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-mobile-screen-button feature-icon"></i>
+                                <span>Cross Platform</span>
+                                <p class="feature-desc">Available everywhere</p>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-cloud feature-icon"></i>
+                                <span>Cloud Storage</span>
+                                <p class="feature-desc">Secure file sharing</p>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-video feature-icon"></i>
+                                <span>Video Calls</span>
+                                <p class="feature-desc">HD conferencing</p>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <a href="/public/login.html" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt"></i> 
+                                Login to Workspace
+                            </a>
+                            <a href="/public/signup.html" class="btn btn-outline">
+                                Create Free Account 
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/assets/logo-white-single.png" alt="Fromto" class="footer-logo-img">
+                    <p class="footer-text">© 2024 Fromto. All rights reserved.</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://x.com/kartikbansode_" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="https://github.com/kartikbansode" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/kartikk.bansode/" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add scroll animation for nav
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('.nav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

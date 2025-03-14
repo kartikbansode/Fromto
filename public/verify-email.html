@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification - Fromto Chat</title>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <style>
+        .verification-success {
+            color: #22c55e;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            padding: 2rem;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f3f4f6;
+        }
+
+        .verification-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .status-message {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .success {
+            background-color: #dcfce7;
+            color: #16a34a;
+        }
+
+        .error {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+
+        .loading {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #3498db;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .redirect-button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .redirect-button:hover {
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="message" class="message" style="display: none;"></div>
+    <div id="verificationMessage" class="verify-email-container" style="display: none;">
+        <!-- Verification content will be inserted here -->
+    </div>
+    
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyChYiTejtDAXaLTH0nCjKuJwR6_PvW6xMc",
+            authDomain: "fromto-72f98.firebaseapp.com",
+            projectId: "fromto-72f98",
+            storageBucket: "fromto-72f98.firebasestorage.app",
+            messagingSenderId: "907173125159",
+            appId: "1:907173125159:web:f35416f73900eaa8078202"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        const statusMessage = document.getElementById('statusMessage');
+        let redirectTimer = null;
+
+        function showMessage(message, type = 'error') {
+            const messageDiv = document.getElementById('message');
+            if (messageDiv) {
+                // Clear any existing timeout
+                if (window.messageTimeout) {
+                    clearTimeout(window.messageTimeout);
+                }
+
+                // Show message
+                messageDiv.textContent = message;
+                messageDiv.className = `message ${type}`;
+                messageDiv.style.display = 'block';
+
+                // Scroll to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+
+                // Auto hide after 3 seconds
+                window.messageTimeout = setTimeout(() => {
+                    messageDiv.style.opacity = '0';
+                    setTimeout(() => {
+                        messageDiv.style.display = 'none';
+                        messageDiv.style.opacity = '1';
+                    }, 300);
+                }, 3000);
+            }
+        }
+
+
+        function redirectToLogin(delay = 2000) {
+            // Clear any existing redirect timer
+            if (redirectTimer) {
+                clearTimeout(redirectTimer);
+            }
+
+            // Set new redirect timer
+            redirectTimer = setTimeout(() => {
+                window.location.href = '/public/login.html';
+            }, delay);
+        }
+
+        // In the verifyEmail function, update the redirect URL
+        async function verifyEmail() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const mode = urlParams.get('mode');
+                const oobCode = urlParams.get('oobCode');
+
+                if (mode === 'verifyEmail' && oobCode) {
+                    await firebase.auth().applyActionCode(oobCode);
+                    showMessage('Email verified successfully! Redirecting...', 'success');
+
+                    // Redirect to chat page
+                    setTimeout(() => {
+                        window.location.href = '/public/chat.html';
+                    }, 2000);
+                }
+                // ... rest of the function
+            } catch (error) {
+                // ... error handling
+            }
+        }
+
+        // Update the auth state listener
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user && user.emailVerified) {
+                showMessage('Email verified! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = '/public/chat.html';
+                }, 2000);
+            }
+        });
+
+        // Start verification process
+        verifyEmail();
+
+        // Cleanup on page unload
+        window.addEventListener('unload', () => {
+            if (redirectTimer) {
+                clearTimeout(redirectTimer);
+            }
+        });
+    </script>
+</body>
+
+</html>
