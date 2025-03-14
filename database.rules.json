@@ -15,6 +15,64 @@
     "chatRooms": {
       ".read": "auth != null",
       ".write": "auth != null"
+    },
+    "connectionRequests": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$requestId": {
+        ".validate": "newData.hasChildren(['from', 'to', 'status', 'timestamp'])",
+        "from": {
+          ".validate": "newData.val() === auth.email"
+        },
+        "to": {
+          ".validate": "newData.isString()"
+        },
+        "status": {
+          ".validate": "newData.val() === 'pending' || newData.val() === 'accepted' || newData.val() === 'rejected'"
+        },
+        "timestamp": {
+          ".validate": "newData.val() <= now"
+        }
+      }
+    },
+    "chats": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$chatId": {
+        "messages": {
+          ".read": "auth != null",
+          ".write": "auth != null",
+          "$messageId": {
+            ".validate": "newData.hasChildren(['sender', 'text', 'timestamp'])",
+            "sender": {
+              ".validate": "newData.val() === auth.email"
+            },
+            "timestamp": {
+              ".validate": "newData.val() <= now"
+            }
+          }
+        },
+        "participants": {
+          ".read": "auth != null",
+          ".write": "auth != null"
+        },
+        "lastMessage": {
+          ".read": "auth != null",
+          ".write": "auth != null"
+        }
+      }
+    },
+    "userStatus": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "$uid === auth.uid",
+        "status": {
+          ".validate": "newData.val() === 'online' || newData.val() === 'offline'"
+        },
+        "lastSeen": {
+          ".validate": "newData.val() <= now"
+        }
+      }
     }
   }
-} 
+}
