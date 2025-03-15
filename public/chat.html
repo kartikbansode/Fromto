@@ -535,8 +535,9 @@
 
         /* Disconnect card container */
         .disconnect-card {
-            background: white;
-            border: 1px solid #e2e8f0;
+            background: #1f2937;
+            color: #f3f4f6;
+            border: 1px solid #374151;
             border-radius: 8px;
             padding: 1.5rem;
             margin-top: 1rem;
@@ -558,7 +559,7 @@
             <button id="mobileMenuToggle" class="mobile-menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
-            <img src="https://kartikbansode.github.io/Fromto/assets/logo-black-full-no-bg.png" alt="" srcset="">
+            <img src="https://kartikbansode.github.io/Fromto/assets/logo-black-full-no-bg.png" alt srcset>
         </div>
         <div class="chat-actions">
             <div class="connection-status online" id="connectionStatus" title="Online"></div>
@@ -626,7 +627,8 @@
                 <div class="messages" id="messages">
                     <div class="welcome-message">
                         <div class="welcome-icon">
-                            <img src="https://kartikbansode.github.io/Fromto/assets/logo-white-single.png" alt="Fromto Logo" class="fromto-logo">
+                            <img src="https://kartikbansode.github.io/Fromto/assets/logo-white-single.png"
+                                alt="Fromto Logo" class="fromto-logo">
                         </div>
                         <h3>Welcome to Fromto Chat</h3>
                         <p>Connect with a user using their code to
@@ -643,7 +645,8 @@
                         </button>
                     </div>
                     <p class="security-note">
-                        <i class="fas fa-lock"></i> Messages are encrypted in transit
+                        <i class="fas fa-lock"></i> Messages are encrypted
+                        in transit
                     </p>
                 </div>
             </div>
@@ -659,7 +662,8 @@
                 </div>
                 <div class="modal-title-section">
                     <h3 class="modal-title">Confirm Connection</h3>
-                    <p class="modal-subtitle">Please verify the connection details below</p>
+                    <p class="modal-subtitle">Please verify the connection
+                        details below</p>
                 </div>
             </div>
 
@@ -684,9 +688,9 @@
             <!-- Security Notice -->
             <div class="security-notice">
                 <i class="fas fa-shield-alt"></i>
-                <p>Please verify the connection details to ensure secure communication.</p>
+                <p>Please verify the connection details to ensure secure
+                    communication.</p>
             </div>
-
 
             <!-- Modal Actions -->
             <div class="modal-actions">
@@ -708,14 +712,16 @@
                 </div>
                 <div class="modal-title-section">
                     <h3 class="modal-title">Confirm Disconnect</h3>
-                    <p class="modal-subtitle">Are you sure you want to end this chat?</p>
+                    <p class="modal-subtitle">Are you sure you want to end
+                        this chat?</p>
                 </div>
             </div>
 
             <!-- Warning Notice -->
             <div class="security-notice" style="background: #FEF3C7; border-color: #FCD34D;">
                 <i class="fas fa-exclamation-triangle" style="color: #D97706;"></i>
-                <p style="color: #92400E;">This will end your current chat session.</p>
+                <p style="color: #92400E;">This will end your current chat
+                    session.</p>
             </div>
 
             <!-- Modal Actions -->
@@ -728,9 +734,6 @@
             </div>
         </div>
     </div>
-
-
-
 
     <script src="https://kartikbansode.github.io/Fromto/public/js/firebase-config.js"></script>
     <script>
@@ -799,17 +802,17 @@
         }
 
         function updateUIToDisconnected() {
-    // Update connection icon and text
-    document.getElementById('connectionIcon').className = 'fas fa-times-circle';
-    document.getElementById('connectionIcon').style.color = '#e53e3e';
-    document.getElementById('connectionText').textContent = 'Disconnected';
-    document.getElementById('connectedUserName').textContent = '';
+            // Update connection icon and text
+            document.getElementById('connectionIcon').className = 'fas fa-times-circle';
+            document.getElementById('connectionIcon').style.color = '#e53e3e';
+            document.getElementById('connectionText').textContent = 'Disconnected';
+            document.getElementById('connectedUserName').textContent = '';
 
-    // Hide chat area
-    document.getElementById('chatArea').style.display = 'none';
+            // Hide chat area
+            document.getElementById('chatArea').style.display = 'none';
 
-    // Show welcome message
-    document.getElementById('messages').innerHTML = `
+            // Show welcome message
+            document.getElementById('messages').innerHTML = `
         <div class="welcome-message">
             <div class="welcome-icon">
                 <img src="https://kartikbansode.github.io/Fromto/assets/logo-white-single.png" alt="Fromto Logo" class="fromto-logo">
@@ -819,29 +822,29 @@
         </div>
     `;
 
-    // Hide disconnect card and show connection form
-    const disconnectCard = document.querySelector('.disconnect-card');
-    const connectionForm = document.querySelector('.connection-form');
+            // Hide disconnect card and show connection form
+            const disconnectCard = document.querySelector('.disconnect-card');
+            const connectionForm = document.querySelector('.connection-form');
 
-    if (disconnectCard) {
-        disconnectCard.style.display = 'none';
-    }
+            if (disconnectCard) {
+                disconnectCard.style.display = 'none';
+            }
 
-    if (connectionForm) {
-        connectionForm.style.display = 'block';
-    }
+            if (connectionForm) {
+                connectionForm.style.display = 'block';
+            }
 
-    // Reset and enable the input field
-    const friendCodeInput = document.getElementById('friendCode');
-    if (friendCodeInput) {
-        friendCodeInput.value = '';
-        friendCodeInput.disabled = false;
-        friendCodeInput.readOnly = false;
-    }
+            // Reset and enable the input field
+            const friendCodeInput = document.getElementById('friendCode');
+            if (friendCodeInput) {
+                friendCodeInput.value = '';
+                friendCodeInput.disabled = false;
+                friendCodeInput.readOnly = false;
+            }
 
-    // Reset current chat
-    currentChat = null;
-}
+            // Reset current chat
+            currentChat = null;
+        }
 
 
 
@@ -1559,4 +1562,5 @@
     </script>
     <script src="https://kartikbansode.github.io/Fromto/public/js/chat.js"></script>
 </body>
+
 </html>
