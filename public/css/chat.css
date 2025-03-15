@@ -711,6 +711,275 @@ input::placeholder {
     }
 }
 
+/* Tablets and Small Desktops */
+@media (max-width: 992px) {
+    .chat-container {
+        grid-template-columns: 240px 1fr;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .chat-brand h1 {
+        font-size: 1.2rem;
+    }
+
+    .connection-card h3,
+    .connection-form h3 {
+        font-size: 1rem;
+    }
+
+    .code-display {
+        font-size: 1.1rem;
+        padding: 0.6rem 0.8rem;
+    }
+
+    .help-text {
+        font-size: 0.8rem;
+    }
+
+    .btn-primary {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .message {
+        max-width: 75%;
+        padding: 0.7rem 0.9rem;
+    }
+}
+
+/* Large Tablets and Small Landscape Tablets */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .chat-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 280px;
+        height: calc(100vh - 60px);
+        background: white;
+        z-index: 99;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        overflow-y: auto;
+    }
+
+    .sidebar.active {
+        display: flex;
+    }
+
+    /* Add overlay when sidebar is active */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 98;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    /* Adjust chat main area to take full width */
+    .chat-main {
+        width: 100%;
+    }
+
+    /* Make messages slightly wider on tablets */
+    .message {
+        max-width: 80%;
+    }
+
+    /* Adjust connection banner */
+    .connection-banner {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    .user-info-header {
+        max-width: 250px;
+    }
+
+    #userEmail {
+        font-size: 0.85rem;
+    }
+}
+
+/* Portrait Tablets and Large Phones */
+@media (max-width: 640px) {
+    .chat-header {
+        padding: 0.7rem 1rem;
+    }
+
+    .chat-brand h1 {
+        font-size: 1.1rem;
+    }
+
+    .chat-container {
+        padding: 10px;
+    }
+
+    .messages {
+        padding: 0.8rem;
+        gap: 0.8rem;
+    }
+
+    .message {
+        max-width: 85%;
+        padding: 0.6rem 0.8rem;
+    }
+
+    .message-time {
+        font-size: 0.65rem;
+    }
+
+    .message-input-area {
+        padding: 0.8rem;
+    }
+
+    .input-group input {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        padding: 0.6rem 0.8rem;
+    }
+
+    /* Adjust notification position */
+    .new-message-notification {
+        bottom: 15px;
+        right: 15px;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+    .chat-header {
+        padding: 0.6rem 0.8rem;
+    }
+
+    /* Hide email on very small screens */
+    #userEmail {
+        display: none;
+    }
+
+    .chat-brand h1 {
+        font-size: 1rem;
+    }
+
+    .chat-container {
+        padding: 10px;
+    }
+
+    .messages {
+        padding: 0.7rem;
+        gap: 0.7rem;
+    }
+
+    .message {
+        max-width: 90%;
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .system-message {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.7rem;
+        max-width: 90%;
+    }
+
+    .message-input-area {
+        padding: 0.6rem;
+    }
+
+    .input-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .input-group input {
+        width: 100%;
+    }
+
+    .btn-primary {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Fix for small screens */
+    .security-note {
+        font-size: 0.65rem;
+        margin-top: 0.2rem;
+    }
+
+    /* Adjust notification position */
+    .new-message-notification {
+        bottom: 10px;
+        right: 10px;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .copy-button {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+
+    .user-info-header {
+        padding: 0.3rem;
+    }
+
+    #userEmail {
+        display: none;
+    }
+
+    .btn-icon.danger {
+        margin-left: 0;
+    }
+}
+
+/* Small Mobile Phones */
+@media (max-width: 360px) {
+    .chat-header {
+        padding: 0.5rem 0.7rem;
+    }
+
+    .chat-container {
+        padding: 5px;
+    }
+
+    .messages {
+        padding: 0.6rem;
+        gap: 0.6rem;
+    }
+
+    .message {
+        max-width: 95%;
+        padding: 0.5rem 0.7rem;
+        font-size: 0.85rem;
+    }
+
+    .message-time {
+        font-size: 0.6rem;
+    }
+}
 
 /* Fix for iPhone X and newer with notches */
 @supports (padding: max(0px)) {
@@ -833,6 +1102,74 @@ button {
 
 /* Additional mobile UI fixes */
 
+/* Fix for very small screens (continued) */
+@media (max-width: 480px) {
+
+    /* Fix message input area for better mobile experience */
+    .message-input-area {
+        padding: 0.6rem;
+    }
+
+    /* Fix input group layout */
+    .message-input-area .input-group {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    /* Fix security note position */
+    .security-note {
+        font-size: 0.65rem;
+        margin-top: 0.2rem;
+    }
+
+    /* Fix notification position */
+    .new-message-notification {
+        bottom: 10px;
+        right: 10px;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    /* Fix user info header */
+    .user-info-header {
+        padding: 0.3rem;
+    }
+}
+
+/* Fix for iPhone X and newer with notches */
+@supports (padding: max(0px)) {
+    .sidebar {
+        padding-bottom: max(15px, env(safe-area-inset-bottom));
+        height: calc(100vh - 60px - env(safe-area-inset-bottom));
+    }
+
+    .message-input-area {
+        padding-bottom: max(0.7rem, env(safe-area-inset-bottom));
+    }
+}
+
+/* Fix for mobile landscape mode */
+@media (max-height: 500px) and (orientation: landscape) {
+    .sidebar {
+        top: 50px;
+        height: calc(100vh - 50px);
+    }
+
+    .messages {
+        max-height: calc(100% - 80px);
+        min-height: 100px;
+    }
+
+    .message-input-area {
+        padding: 0.5rem;
+    }
+
+    .chat-header {
+        padding: 0.4rem 1rem;
+    }
+}
+
 /* Fix for active button states on mobile */
 button:active,
 .btn-primary:active,
@@ -866,6 +1203,200 @@ button:disabled {
     padding: 3px 6px;
 }
 
+/* Fix for mobile menu toggle button */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: #4a5568;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    margin-right: 10px;
+    z-index: 101;
+}
+
+/* Fix for sidebar on mobile */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .sidebar {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 280px;
+        height: calc(100vh - 60px);
+        background: white;
+        z-index: 99;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        overflow-y: auto;
+    }
+
+    .sidebar.active {
+        display: flex;
+        animation: slideIn 0.3s forwards;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(-100%);
+        }
+
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 98;
+        touch-action: manipulation;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+        animation: fadeIn 0.3s forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Fix chat header layout */
+    .chat-header {
+        padding: 0.6rem 1rem;
+    }
+
+    /* Ensure buttons are large enough for touch */
+    .btn-icon,
+    .btn-primary,
+    .copy-button {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    /* Fix for message input on mobile */
+    .message-input-area .input-group {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .message-input-area .input-group input {
+        flex: 1;
+        min-height: 44px;
+        font-size: 16px;
+        /* Prevent zoom on iOS */
+    }
+
+    .message-input-area .btn-primary {
+        min-height: 44px;
+        padding: 0.5rem 1rem;
+    }
+
+    /* Fix for iOS form elements */
+    input,
+    textarea,
+    select,
+    button {
+        -webkit-appearance: none;
+        border-radius: 8px;
+    }
+
+    /* Fix for iOS touch delay */
+    a,
+    button,
+    input,
+    textarea,
+    select {
+        touch-action: manipulation;
+    }
+}
+
+/* Additional fixes for very small screens */
+@media (max-width: 480px) {
+
+    /* Fix chat container padding */
+    .chat-container {
+        padding: 10px;
+    }
+
+    /* Make messages wider */
+    .message {
+        max-width: 90%;
+    }
+
+    /* Fix card padding */
+    .card {
+        padding: 1rem;
+    }
+
+    /* Fix code display */
+    .code-display {
+        font-size: 1.2rem;
+        padding: 0.6rem;
+    }
+
+    /* Fix security note */
+    .security-note {
+        font-size: 0.65rem;
+    }
+
+    /* Fix user info header */
+    .user-info-header {
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    /* Fix message input area */
+    .message-input-area {
+        padding: 0.5rem;
+    }
+}
+
+/* Fix for active button states on mobile */
+button:active,
+.btn-primary:active,
+.btn-icon:active,
+.copy-button:active,
+button.active,
+.btn-primary.active,
+.btn-icon.active,
+.copy-button.active {
+    opacity: 0.8;
+    transform: scale(0.98);
+}
+
+/* Fix for disabled buttons */
+button:disabled,
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 
 /* Improved chat layout for computer screens */
 .chat-window {
