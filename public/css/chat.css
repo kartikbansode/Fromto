@@ -6,7 +6,7 @@
     height: calc(var(--vh, 1vh) * 100);
     display: flex;
     flex-direction: column;
-    background-color: #f0f2f5;
+    background-color: #181B20;
     overflow: hidden;
     position: relative;
     
