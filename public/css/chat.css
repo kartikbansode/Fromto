@@ -1712,7 +1712,7 @@ button:disabled,
 
 /* Add these styles to your existing chat.css */
 .disconnect-card {
-    border: 1px solid #ebf4ff;
+    background: #1f2937;
     border-color: #374151;
     color: #f3f4f6;
     animation: cardEntrance 0.3s ease-out;
