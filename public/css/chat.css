@@ -21,7 +21,6 @@
     align-items: center;
     padding: 0 1rem;
     background-color: #181B20;
-    border-color: #374151;
     color: #f3f4f6;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -166,7 +165,6 @@
     height: calc(100vh - 60px);
     max-height: calc(100vh - 60px);
     background-color: #181B20;;
-    border-color: #374151;
     color: #f3f4f6;
 }
 
@@ -181,7 +179,6 @@
 
 .card {
     background: #1f2937;
-    border-color: #374151;
     color: #f3f4f6;
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
@@ -198,7 +195,7 @@
 .connection-form h3 {
     font-size: 1.1rem;
     margin-bottom: 1rem;
-    color: #2d3748;
+    color: white;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -221,7 +218,6 @@
     letter-spacing: 2px;
     padding: 0.75rem 1rem;
     background: #1f2937;
-    border-color: #374151;
     color: #f3f4f6;
     border: 1px dashed #cbd5e0;
     border-radius: 8px;
