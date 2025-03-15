@@ -100,7 +100,7 @@
             background-color: #4338ca;
         }
 
-        .mobile-warning {
+        .desktop-only-warning {
             display: none;
             position: fixed;
             top: 0;
@@ -118,21 +118,25 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
-        .mobile-warning .content {
+        .desktop-only-warning .content {
             max-width: 500px;
         }
-        .mobile-warning .desktop-icon {
+        .desktop-only-warning .icon {
             font-size: 50px;
             color: #4a6bdf;
             margin-bottom: 20px;
         }
-        .mobile-warning h1 {
+        .desktop-only-warning h1 {
             font-size: 24px;
             margin-bottom: 10px;
         }
-        .mobile-warning p {
+        .desktop-only-warning p {
             font-size: 16px;
             line-height: 1.5;
+        }
+        .desktop-only-warning .logo {
+            width: 100px;
+            margin-bottom: 20px;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
@@ -253,10 +257,10 @@
             function checkScreenSize() {
                 if (window.innerWidth < 1024) {
                     document.body.innerHTML = `
-                        <div class="mobile-warning">
+                        <div class="desktop-only-warning">
                             <div class="content">
-
-                                <div class="desktop-icon"><i class="fa-solid fa-desktop fa-beat"></i></div>
+                                <img src="https://kartikbansode.github.io/Fromto/assets/logo-white-single.png" alt="Fromto Logo" class="logo">
+                                <div class="icon"><i class="fa-solid fa-desktop fa-beat"></i></div>
                                 <h1>Desktop Only</h1>
                                 <p>We're sorry, but this website is only accessible on desktop screens. Please visit us on a desktop device for the best experience.</p>
                             </div>
