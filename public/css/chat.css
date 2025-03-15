@@ -1,4 +1,8 @@
-/* Fromto Chat - Professional Chat Interface CSS */
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
 
 /* Core Layout */
 .chat-page {
@@ -9,7 +13,7 @@
     background-color: #181B20;
     overflow: hidden;
     position: relative;
-    
+
 }
 
 /* Header Styling */
@@ -20,7 +24,9 @@
     display: flex;
     align-items: center;
     padding: 0 1rem;
-    background: #ffffff;
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     z-index: 100;
@@ -32,12 +38,16 @@
     gap: 12px;
     padding-left: 10px;
 }
+
 .chat-brand img {
-    height: 32px;  /* Fixed height */
-    width: auto;   /* Maintain aspect ratio */
+    height: 32px;
+    /* Fixed height */
+    width: auto;
+    /* Maintain aspect ratio */
     object-fit: contain;
     vertical-align: middle;
-    margin-top: 2px; /* Fine-tune vertical alignment */
+    margin-top: 2px;
+    /* Fine-tune vertical alignment */
 }
 
 /* If you need the logo to be slightly larger on desktop */
@@ -46,6 +56,7 @@
         height: 38px;
     }
 }
+
 .chat-brand h1 {
     font-size: 1.35rem;
     font-weight: 700;
@@ -137,9 +148,11 @@
     0% {
         box-shadow: 0 0 0 0 rgba(56, 178, 172, 0.7);
     }
+
     70% {
         box-shadow: 0 0 0 6px rgba(56, 178, 172, 0);
     }
+
     100% {
         box-shadow: 0 0 0 0 rgba(56, 178, 172, 0);
     }
@@ -155,6 +168,9 @@
     overflow: hidden;
     height: calc(100vh - 60px);
     max-height: calc(100vh - 60px);
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
 }
 
 /* Sidebar Styling */
@@ -164,10 +180,15 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
 }
 
 .card {
-    background: white;
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     padding: 1.5rem;
@@ -179,7 +200,7 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.connection-card h3, 
+.connection-card h3,
 .connection-form h3 {
     font-size: 1.1rem;
     margin-bottom: 1rem;
@@ -189,7 +210,7 @@
     gap: 0.5rem;
 }
 
-.connection-card h3 i, 
+.connection-card h3 i,
 .connection-form h3 i {
     color: #4a6bdf;
 }
@@ -197,6 +218,9 @@
 .code-section {
     position: relative;
     margin: 1rem 0;
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
 }
 
 .code-display {
@@ -243,9 +267,17 @@
 }
 
 @keyframes pulse-once {
-    0% { transform: translateY(-50%) scale(1); }
-    50% { transform: translateY(-50%) scale(1.2); }
-    100% { transform: translateY(-50%) scale(1); }
+    0% {
+        transform: translateY(-50%) scale(1);
+    }
+
+    50% {
+        transform: translateY(-50%) scale(1.2);
+    }
+
+    100% {
+        transform: translateY(-50%) scale(1);
+    }
 }
 
 .copy-tooltip {
@@ -352,13 +384,18 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
 }
 
 .chat-window {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: white;
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
     border-radius: 19px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     overflow: hidden;
@@ -428,8 +465,15 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .message.sent {
@@ -487,7 +531,8 @@
     align-items: center;
     justify-content: center;
     font-size: 0.7rem;
-    color: #718096;
+    background: #1f2937;
+    color: #f3f4f6;
     margin-top: auto;
 }
 
@@ -497,8 +542,15 @@
 }
 
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
 }
 
 /* Responsiveness */
@@ -512,7 +564,7 @@
     .chat-container {
         grid-template-columns: 1fr;
     }
-    
+
     .sidebar {
         display: none;
         position: fixed;
@@ -525,15 +577,15 @@
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         padding: 15px;
     }
-    
+
     .sidebar.active {
         display: flex;
     }
-    
+
     .mobile-menu-toggle {
         display: flex;
     }
-    
+
     .message-input-area {
         height: 70px;
         min-height: 70px;
@@ -591,7 +643,8 @@
 }
 
 /* Additional improvements */
-.btn:active, .btn-primary:active {
+.btn:active,
+.btn-primary:active {
     transform: scale(0.98);
 }
 
@@ -640,42 +693,6 @@ input::placeholder {
     margin-left: 0;
 }
 
-/* Add this to ensure proper scrolling on all browsers */
-html, body {
-    height: 100%;
-    overflow: hidden;
-}
-
-/* Enhanced Responsive Design for All Devices */
-
-/* Mobile Menu Toggle Button - Add this first */
-.mobile-menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.25rem;
-    color: #4a5568;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    width: 44px;
-    height: 44px;
-    align-items: center;
-    justify-content: center;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    margin-right: 10px;
-    z-index: 101;
-}
-
-.mobile-menu-toggle:hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: #4a6bdf;
-}
-
-/* Update the existing responsive section with these improved styles */
-/* Large Desktop (No changes needed - default styles work well) */
 
 /* Desktop and Small Laptops */
 @media (max-width: 1200px) {
@@ -684,285 +701,16 @@ html, body {
         gap: 15px;
         padding: 15px;
     }
-    
+
     .card {
         padding: 1.25rem;
     }
-    
+
     .code-display {
         font-size: 1.25rem;
     }
 }
 
-/* Tablets and Small Desktops */
-@media (max-width: 992px) {
-    .chat-container {
-        grid-template-columns: 240px 1fr;
-        gap: 12px;
-        padding: 12px;
-    }
-    
-    .chat-brand h1 {
-        font-size: 1.2rem;
-    }
-    
-    .connection-card h3, 
-    .connection-form h3 {
-        font-size: 1rem;
-    }
-    
-    .code-display {
-        font-size: 1.1rem;
-        padding: 0.6rem 0.8rem;
-    }
-    
-    .help-text {
-        font-size: 0.8rem;
-    }
-    
-    .btn-primary {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-    }
-    
-    .message {
-        max-width: 75%;
-        padding: 0.7rem 0.9rem;
-    }
-}
-
-/* Large Tablets and Small Landscape Tablets */
-@media (max-width: 768px) {
-    .mobile-menu-toggle {
-        display: flex;
-    }
-    
-    .chat-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .sidebar {
-        display: none;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 280px;
-        height: calc(100vh - 60px);
-        background: white;
-        z-index: 99;
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-        padding: 15px;
-        overflow-y: auto;
-    }
-    
-    .sidebar.active {
-        display: flex;
-    }
-    
-    /* Add overlay when sidebar is active */
-    .sidebar-overlay {
-        display: none;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 98;
-    }
-    
-    .sidebar-overlay.active {
-        display: block;
-    }
-    
-    /* Adjust chat main area to take full width */
-    .chat-main {
-        width: 100%;
-    }
-    
-    /* Make messages slightly wider on tablets */
-    .message {
-        max-width: 80%;
-    }
-    
-    /* Adjust connection banner */
-    .connection-banner {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.85rem;
-    }
-
-    .user-info-header {
-        max-width: 250px;
-    }
-    
-    #userEmail {
-        font-size: 0.85rem;
-    }
-}
-
-/* Portrait Tablets and Large Phones */
-@media (max-width: 640px) {
-    .chat-header {
-        padding: 0.7rem 1rem;
-    }
-    
-    .chat-brand h1 {
-        font-size: 1.1rem;
-    }
-    
-    .chat-container {
-        padding: 10px;
-    }
-    
-    .messages {
-        padding: 0.8rem;
-        gap: 0.8rem;
-    }
-    
-    .message {
-        max-width: 85%;
-        padding: 0.6rem 0.8rem;
-    }
-    
-    .message-time {
-        font-size: 0.65rem;
-    }
-    
-    .message-input-area {
-        padding: 0.8rem;
-    }
-    
-    .input-group input {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.9rem;
-    }
-    
-    .btn-primary {
-        padding: 0.6rem 0.8rem;
-    }
-    
-    /* Adjust notification position */
-    .new-message-notification {
-        bottom: 15px;
-        right: 15px;
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-    }
-}
-
-/* Mobile Phones */
-@media (max-width: 480px) {
-    .chat-header {
-        padding: 0.6rem 0.8rem;
-    }
-    
-    /* Hide email on very small screens */
-    #userEmail {
-        display: none;
-    }
-    
-    .chat-brand h1 {
-        font-size: 1rem;
-    }
-    
-    .chat-container {
-        padding: 10px;
-    }
-    
-    .messages {
-        padding: 0.7rem;
-        gap: 0.7rem;
-    }
-    
-    .message {
-        max-width: 90%;
-        padding: 0.6rem 0.8rem;
-        font-size: 0.9rem;
-    }
-    
-    .system-message {
-        font-size: 0.75rem;
-        padding: 0.4rem 0.7rem;
-        max-width: 90%;
-    }
-    
-    .message-input-area {
-        padding: 0.6rem;
-    }
-    
-    .input-group {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    .input-group input {
-        width: 100%;
-    }
-    
-    .btn-primary {
-        margin-left: 0;
-        width: 100%;
-        justify-content: center;
-    }
-    
-    /* Fix for small screens */
-    .security-note {
-        font-size: 0.65rem;
-        margin-top: 0.2rem;
-    }
-    
-    /* Adjust notification position */
-    .new-message-notification {
-        bottom: 10px;
-        right: 10px;
-        padding: 0.5rem 0.8rem;
-        font-size: 0.8rem;
-    }
-
-    .copy-button {
-        width: 28px;
-        height: 28px;
-        font-size: 0.8rem;
-    }
-
-    .user-info-header {
-        padding: 0.3rem;
-    }
-    
-    #userEmail {
-        display: none;
-    }
-    
-    .btn-icon.danger {
-        margin-left: 0;
-    }
-}
-
-/* Small Mobile Phones */
-@media (max-width: 360px) {
-    .chat-header {
-        padding: 0.5rem 0.7rem;
-    }
-    
-    .chat-container {
-        padding: 5px;
-    }
-    
-    .messages {
-        padding: 0.6rem;
-        gap: 0.6rem;
-    }
-    
-    .message {
-        max-width: 95%;
-        padding: 0.5rem 0.7rem;
-        font-size: 0.85rem;
-    }
-    
-    .message-time {
-        font-size: 0.6rem;
-    }
-}
 
 /* Fix for iPhone X and newer with notches */
 @supports (padding: max(0px)) {
@@ -970,7 +718,7 @@ html, body {
         padding-left: max(1.5rem, env(safe-area-inset-left));
         padding-right: max(1.5rem, env(safe-area-inset-right));
     }
-    
+
     .chat-container {
         padding-left: max(20px, env(safe-area-inset-left));
         padding-right: max(20px, env(safe-area-inset-right));
@@ -983,21 +731,21 @@ html, body {
     .chat-header {
         padding: 0.5rem 1rem;
     }
-    
+
     .chat-container {
         height: calc(100vh - 50px);
         max-height: calc(100vh - 50px);
     }
-    
+
     .messages {
         max-height: calc(100% - 80px);
         min-height: 120px;
     }
-    
+
     .message-input-area {
         padding: 0.6rem;
     }
-    
+
     .sidebar {
         top: 50px;
         height: calc(100vh - 50px);
@@ -1037,7 +785,8 @@ html, body {
 .messages {
     flex: 1;
     overflow-y: auto;
-    max-height: calc(100% - 70px); /* Reduced from 80px to account for smaller input area */
+    max-height: calc(100% - 70px);
+    /* Reduced from 80px to account for smaller input area */
 }
 
 /* Ensure the input group takes full width */
@@ -1084,75 +833,11 @@ button {
 
 /* Additional mobile UI fixes */
 
-/* Fix for very small screens (continued) */
-@media (max-width: 480px) {
-    /* Fix message input area for better mobile experience */
-    .message-input-area {
-        padding: 0.6rem;
-    }
-    
-    /* Fix input group layout */
-    .message-input-area .input-group {
-        display: flex;
-        flex-direction: row;
-        gap: 8px;
-    }
-    
-    /* Fix security note position */
-    .security-note {
-        font-size: 0.65rem;
-        margin-top: 0.2rem;
-    }
-    
-    /* Fix notification position */
-    .new-message-notification {
-        bottom: 10px;
-        right: 10px;
-        padding: 0.5rem 0.8rem;
-        font-size: 0.8rem;
-    }
-    
-    /* Fix user info header */
-    .user-info-header {
-        padding: 0.3rem;
-    }
-}
-
-/* Fix for iPhone X and newer with notches */
-@supports (padding: max(0px)) {
-    .sidebar {
-        padding-bottom: max(15px, env(safe-area-inset-bottom));
-        height: calc(100vh - 60px - env(safe-area-inset-bottom));
-    }
-    
-    .message-input-area {
-        padding-bottom: max(0.7rem, env(safe-area-inset-bottom));
-    }
-}
-
-/* Fix for mobile landscape mode */
-@media (max-height: 500px) and (orientation: landscape) {
-    .sidebar {
-        top: 50px;
-        height: calc(100vh - 50px);
-    }
-    
-    .messages {
-        max-height: calc(100% - 80px);
-        min-height: 100px;
-    }
-    
-    .message-input-area {
-        padding: 0.5rem;
-    }
-    
-    .chat-header {
-        padding: 0.4rem 1rem;
-    }
-}
-
 /* Fix for active button states on mobile */
-button:active, .btn-primary:active, .btn-icon:active, .copy-button:active {
+button:active,
+.btn-primary:active,
+.btn-icon:active,
+.copy-button:active {
     opacity: 0.8;
     transform: scale(0.98);
 }
@@ -1164,7 +849,8 @@ button:disabled {
 }
 
 /* Fix for message bubbles on mobile */
-.message.sent::after, .message.received::after {
+.message.sent::after,
+.message.received::after {
     border-width: 8px;
 }
 
@@ -1180,172 +866,6 @@ button:disabled {
     padding: 3px 6px;
 }
 
-/* Fix for mobile menu toggle button */
-.mobile-menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.25rem;
-    color: #4a5568;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    width: 44px;
-    height: 44px;
-    align-items: center;
-    justify-content: center;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    margin-right: 10px;
-    z-index: 101;
-}
-
-/* Fix for sidebar on mobile */
-@media (max-width: 768px) {
-    .mobile-menu-toggle {
-        display: flex;
-    }
-    
-    .sidebar {
-        display: none;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 280px;
-        height: calc(100vh - 60px);
-        background: white;
-        z-index: 99;
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-        padding: 15px;
-        overflow-y: auto;
-    }
-    
-    .sidebar.active {
-        display: flex;
-        animation: slideIn 0.3s forwards;
-    }
-    
-    @keyframes slideIn {
-        from { transform: translateX(-100%); }
-        to { transform: translateX(0); }
-    }
-    
-    .sidebar-overlay {
-        display: none;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 98;
-        touch-action: manipulation;
-    }
-    
-    .sidebar-overlay.active {
-        display: block;
-        animation: fadeIn 0.3s forwards;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    /* Fix chat header layout */
-    .chat-header {
-        padding: 0.6rem 1rem;
-    }
-    
-    /* Ensure buttons are large enough for touch */
-    .btn-icon, .btn-primary, .copy-button {
-        min-width: 44px;
-        min-height: 44px;
-    }
-    
-    /* Fix for message input on mobile */
-    .message-input-area .input-group {
-        flex-direction: row;
-        gap: 8px;
-    }
-    
-    .message-input-area .input-group input {
-        flex: 1;
-        min-height: 44px;
-        font-size: 16px; /* Prevent zoom on iOS */
-    }
-    
-    .message-input-area .btn-primary {
-        min-height: 44px;
-        padding: 0.5rem 1rem;
-    }
-    
-    /* Fix for iOS form elements */
-    input, textarea, select, button {
-        -webkit-appearance: none;
-        border-radius: 8px;
-    }
-    
-    /* Fix for iOS touch delay */
-    a, button, input, textarea, select {
-        touch-action: manipulation;
-    }
-}
-
-/* Additional fixes for very small screens */
-@media (max-width: 480px) {
-    /* Fix chat container padding */
-    .chat-container {
-        padding: 10px;
-    }
-    
-    /* Make messages wider */
-    .message {
-        max-width: 90%;
-    }
-    
-    /* Fix card padding */
-    .card {
-        padding: 1rem;
-    }
-    
-    /* Fix code display */
-    .code-display {
-        font-size: 1.2rem;
-        padding: 0.6rem;
-    }
-    
-    /* Fix security note */
-    .security-note {
-        font-size: 0.65rem;
-    }
-    
-    /* Fix user info header */
-    .user-info-header {
-        background: transparent;
-        box-shadow: none;
-        padding: 0;
-    }
-    
-    /* Fix message input area */
-    .message-input-area {
-        padding: 0.5rem;
-    }
-}
-
-/* Fix for active button states on mobile */
-button:active, .btn-primary:active, .btn-icon:active, .copy-button:active,
-button.active, .btn-primary.active, .btn-icon.active, .copy-button.active {
-    opacity: 0.8;
-    transform: scale(0.98);
-}
-
-/* Fix for disabled buttons */
-button:disabled, .btn-primary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
 
 /* Improved chat layout for computer screens */
 .chat-window {
@@ -1357,7 +877,8 @@ button:disabled, .btn-primary:disabled {
     height: 100%;
     overflow: hidden;
     position: relative;
-    max-height: calc(100vh - 105px); /* Ensure it doesn't overflow the viewport */
+    max-height: calc(100vh - 105px);
+    /* Ensure it doesn't overflow the viewport */
 }
 
 /* Fix messages container height and scrolling */
@@ -1369,7 +890,8 @@ button:disabled, .btn-primary:disabled {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    max-height: calc(100% - 60px); /* Reduced to make room for input area */
+    max-height: calc(100% - 60px);
+    /* Reduced to make room for input area */
     min-height: 200px;
     scroll-behavior: smooth;
 }
@@ -1386,7 +908,8 @@ button:disabled, .btn-primary:disabled {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    max-height: 60px; /* Fixed height for input area */
+    max-height: 60px;
+    /* Fixed height for input area */
 }
 
 /* Improve input group layout */
@@ -1448,15 +971,15 @@ button:disabled, .btn-primary:disabled {
         height: calc(100vh - 60px);
         max-height: calc(100vh - 60px);
     }
-    
+
     .chat-window {
         height: 100%;
     }
-    
+
     .messages {
         padding: 1.5rem;
     }
-    
+
     /* Ensure the chat window has proper layout */
     .chat-main {
         display: flex;
@@ -1500,9 +1023,11 @@ button:disabled, .btn-primary:disabled {
 
 /* Adjust overall container height */
 .chat-container {
-    height: calc(100vh - 60px); /* Slightly reduced height */
+    height: calc(100vh - 60px);
+    /* Slightly reduced height */
     max-height: calc(100vh - 60px);
-    padding: 15px; /* Reduced padding */
+    padding: 15px;
+    /* Reduced padding */
     overflow: hidden;
 }
 
@@ -1521,16 +1046,22 @@ button:disabled, .btn-primary:disabled {
 .messages {
     flex: 1;
     overflow-y: auto;
-    padding: 1rem; /* Reduced padding */
-    gap: 0.8rem; /* Reduced gap */
-    max-height: calc(100% - 60px); /* Fixed height calculation */
-    min-height: 100px; /* Reduced min height */
+    padding: 1rem;
+    /* Reduced padding */
+    gap: 0.8rem;
+    /* Reduced gap */
+    max-height: calc(100% - 60px);
+    /* Fixed height calculation */
+    min-height: 100px;
+    /* Reduced min height */
 }
 
 /* Fix message input area to stay at bottom */
 .message-input-area {
-    flex-shrink: 0; /* Prevent shrinking */
-    padding: 0.6rem; /* Reduced padding */
+    flex-shrink: 0;
+    /* Prevent shrinking */
+    padding: 0.6rem;
+    /* Reduced padding */
     border-top: 1px solid #e2e8f0;
     background: white;
     width: 100%;
@@ -1539,15 +1070,18 @@ button:disabled, .btn-primary:disabled {
 
 /* Adjust connection banner */
 .connection-banner {
-    flex-shrink: 0; /* Prevent shrinking */
-    padding: 0.5rem 1rem; /* Reduced padding */
+    flex-shrink: 0;
+    /* Prevent shrinking */
+    padding: 0.5rem 1rem;
+    /* Reduced padding */
 }
 
 /* Fix typing indicator position */
 .typing-indicator {
     height: 16px;
     font-size: 0.75rem;
-    position: static; /* Changed from absolute */
+    position: static;
+    /* Changed from absolute */
     margin-bottom: 0.2rem;
 }
 
@@ -1561,26 +1095,30 @@ button:disabled, .btn-primary:disabled {
 /* Adjust message sizes */
 .message {
     max-width: 70%;
-    padding: 0.6rem 0.8rem; /* Reduced padding */
+    padding: 0.6rem 0.8rem;
+    /* Reduced padding */
 }
 
 /* Fix system message */
 .system-message {
-    padding: 0.4rem 0.8rem; /* Reduced padding */
-    margin: 0.4rem auto; /* Reduced margin */
+    padding: 0.4rem 0.8rem;
+    /* Reduced padding */
+    margin: 0.4rem auto;
+    /* Reduced margin */
 }
 
 /* Desktop specific adjustments */
 @media (min-width: 1024px) {
     .chat-container {
         padding: 15px;
-        gap: 15px; /* Reduced gap */
+        gap: 15px;
+        /* Reduced gap */
     }
-    
+
     .messages {
         padding: 1rem;
     }
-    
+
     /* Ensure proper layout for desktop */
     .chat-main {
         height: 100%;
@@ -1589,28 +1127,35 @@ button:disabled, .btn-primary:disabled {
 
 /* Fix for welcome message */
 .welcome-message {
-    padding: 1.5rem; /* Reduced padding */
+    padding: 1.5rem;
+    /* Reduced padding */
 }
 
 .welcome-message i {
-    font-size: 2.5rem; /* Reduced size */
-    margin-bottom: 1rem; /* Reduced margin */
+    font-size: 2.5rem;
+    /* Reduced size */
+    margin-bottom: 1rem;
+    /* Reduced margin */
 }
 
 .welcome-message h2 {
-    font-size: 1.3rem; /* Reduced size */
-    margin-bottom: 0.8rem; /* Reduced margin */
+    font-size: 1.3rem;
+    /* Reduced size */
+    margin-bottom: 0.8rem;
+    /* Reduced margin */
 }
 
 /* Fix for input group */
 .message-input-area .input-group {
-    margin-top: 0; /* Remove margin */
+    margin-top: 0;
+    /* Remove margin */
 }
 
 /* Fix for input and button height */
 .message-input-area .input-group input,
 .message-input-area .btn-primary {
-    height: 38px; /* Slightly reduced height */
+    height: 38px;
+    /* Slightly reduced height */
     min-height: 38px;
 }
 
@@ -1687,6 +1232,7 @@ button:disabled, .btn-primary:disabled {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -1696,8 +1242,8 @@ button:disabled, .btn-primary:disabled {
 /* Match the existing card hover effect */
 .disconnect-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 
-                0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 /* Status message alignment */
