@@ -412,7 +412,7 @@
 .connection-banner.disconnected {
     background-color: #181B20;
     color: #822727;
-    border-bottom: 1px solid #fed7d7;
+    border-bottom: 1px solid #1f2937;
 }
 
 #connectedUserName {
