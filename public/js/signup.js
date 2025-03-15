@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const verificationDiv = document.getElementById('verificationMessage');
     const googleButton = document.getElementById('googleSignup');
 
+
+
+
     // Check auth state on page load
     firebase.auth().onAuthStateChanged(async (user) => {
         if (user) {
@@ -42,8 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-    
-    
+
+    if (googleButton) googleButton.dataset.originalText = googleButton.innerHTML;
+
 
     const timerManager = {
         timers: {},
@@ -66,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function checkVerificationStatus() {
         const isVerified = sessionStorage.getItem('emailVerified') === 'true';
         const userEmail = sessionStorage.getItem('userEmail');
-        
+
         if (isVerified) {
             showVerificationSuccess();
         } else if (userEmail) {
@@ -79,10 +83,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function showVerificationSuccess() {
         const verificationDiv = document.getElementById('verificationMessage');
         if (!verificationDiv) return;
-    
+
         // Clean up everything first
         cleanupVerificationTimer();
-        
+
         // Update container with success message
         verificationDiv.innerHTML = `
             <div class="verify-email-container">
@@ -95,30 +99,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             </div>
         `;
-    
+
         // Show the verification div
         verificationDiv.style.display = 'block';
-    
+
         // Add fade-in effect
         verificationDiv.style.opacity = '0';
         setTimeout(() => {
             verificationDiv.style.transition = 'opacity 0.5s ease-in';
             verificationDiv.style.opacity = '1';
-            
+
             // Redirect after showing success message
             setTimeout(() => {
                 window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
             }, 2000);
         }, 100);
     }
-    
-    
-    
-    
 
 
-    
-    
+
+
+
+
+
+
 
 
     function showMessage(message, type = 'error') {
@@ -128,18 +132,18 @@ document.addEventListener('DOMContentLoaded', function () {
             if (window.messageTimeout) {
                 clearTimeout(window.messageTimeout);
             }
-    
+
             // Show message
             messageDiv.textContent = message;
             messageDiv.className = `message ${type}`;
             messageDiv.style.display = 'block';
-    
+
             // Scroll to top
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
-    
+
             // Auto hide after 3 seconds
             window.messageTimeout = setTimeout(() => {
                 messageDiv.style.opacity = '0';
@@ -150,9 +154,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 3000);
         }
     }
-    
-    
-    
+
+
+
 
     function setLoading(button, isLoading) {
         if (button) {
@@ -164,12 +168,12 @@ document.addEventListener('DOMContentLoaded', function () {
     function cleanupVerificationTimer() {
         // Clear all managed timers
         timerManager.clearAll();
-        
+
         // Clear session storage
         sessionStorage.removeItem('verificationStartTime');
         sessionStorage.removeItem('emailVerified');
     }
-    
+
 
     function showVerificationStatus(email) {
         if (signupForm) signupForm.style.display = 'none';
@@ -353,22 +357,22 @@ document.addEventListener('DOMContentLoaded', function () {
     function safeRedirect(url) {
         // Clean up everything before redirect
         cleanupVerificationTimer();
-        
+
         // Clear all session storage
         sessionStorage.clear();
-        
+
         // Perform the redirect
         window.location.href = url;
     }
-    
-    
-
-    
-    
 
 
-    
-    
+
+
+
+
+
+
+
 
 
 
@@ -401,14 +405,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 const user = firebase.auth().currentUser;
                 if (user) {
                     await user.sendEmailVerification({
-                        url:'https://kartikbansode.github.io/Fromto/public/chat.html'
+                        url: 'https://kartikbansode.github.io/Fromto/public/chat.html'
                     });
                     showMessage('Verification email resent!', 'success');
                     timeLeft = 30;
                 } else {
                     await firebase.auth().signInWithEmailAndPassword(email, passwordInput.value);
                     await firebase.auth().currentUser.sendEmailVerification({
-                        url:'https://kartikbansode.github.io/Fromto/public/chat.html'
+                        url: 'https://kartikbansode.github.io/Fromto/public/chat.html'
                     });
                 }
             } catch (error) {
@@ -422,33 +426,33 @@ document.addEventListener('DOMContentLoaded', function () {
     if (signupForm) {
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-    
+
             const email = emailInput.value.trim();
             const password = passwordInput.value;
             const confirmPassword = confirmPasswordInput.value;
-    
+
             // Clear previous messages
             if (messageDiv) messageDiv.style.display = 'none';
-    
+
             // Validation
             if (!email || !password || !confirmPassword) {
                 showMessage('Please fill in all fields');
                 return;
             }
-    
+
             if (password !== confirmPassword) {
                 showMessage('Passwords do not match');
                 return;
             }
-    
+
             if (password.length < 6) {
                 showMessage('Password must be at least 6 characters');
                 return;
             }
-    
+
             try {
                 setLoading(signupButton, true);
-    
+
                 // Check if email exists in Firebase
                 const signInMethods = await firebase.auth().fetchSignInMethodsForEmail(email);
                 if (signInMethods.length > 0) {
@@ -456,35 +460,35 @@ document.addEventListener('DOMContentLoaded', function () {
                     setLoading(signupButton, false);
                     return;
                 }
-    
+
                 // Create user
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 const user = userCredential.user;
-    
+
                 // Send verification email
                 await user.sendEmailVerification({
-                    url:'https://kartikbansode.github.io/Fromto/public/chat.html'
+                    url: 'https://kartikbansode.github.io/Fromto/public/chat.html'
                 });
-    
+
                 // Show verification status
                 showVerificationStatus(email);
-    
+
                 // Start checking for email verification
                 startVerificationCheck(user);
-    
+
                 // Clear the form
                 signupForm.reset();
-    
+
                 // Hide the signup form
                 signupForm.style.display = 'none';
-    
+
                 // Show success message
                 showMessage('Verification email sent! Please check your inbox.', 'success');
-    
+
             } catch (error) {
                 console.error('Signup error:', error);
                 setLoading(signupButton, false);
-    
+
                 switch (error.code) {
                     case 'auth/email-already-in-use':
                         showMessage('An account with this email already exists');
@@ -501,30 +505,30 @@ document.addEventListener('DOMContentLoaded', function () {
                     default:
                         showMessage(error.message || 'Error creating account. Please try again.');
                 }
-    
+
                 // Re-enable the signup button on error
                 setLoading(signupButton, false);
             }
         });
     }
-    
+
 
     function startVerificationCheck(user) {
         // Clear any existing checks first
         if (window.verificationCheckInterval) {
             clearInterval(window.verificationCheckInterval);
         }
-    
+
         window.verificationCheckInterval = setInterval(async () => {
             try {
                 // Reload user data
                 await user.reload();
                 const updatedUser = firebase.auth().currentUser;
-                
+
                 if (updatedUser && updatedUser.emailVerified) {
                     // Clear interval immediately
                     clearInterval(window.verificationCheckInterval);
-                    
+
                     // Show success and redirect
                     showVerificationSuccess();
                 }
@@ -534,41 +538,41 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }, 2000);
     }
-    
-    
-    
-  // Handle Google Sign In
-  if (googleButton) {
-    googleButton.addEventListener('click', async () => {
-      try {
-        setLoading(googleButton, true);
-        const provider = new firebase.auth.GoogleAuthProvider();
-        const result = await firebase.auth().signInWithPopup(provider);
-        const user = result.user;
 
-        showMessage('Login successful! Redirecting...', 'success');
-        setTimeout(() => {
-          window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
-        }, 1500);
 
-      } catch (error) {
-        console.error('Google sign-in error:', error);
-        setLoading(googleButton, false);
 
-        switch (error.code) {
-          case 'auth/popup-blocked':
-            showMessage('Please allow popups for this website');
-            break;
-          case 'auth/popup-closed-by-user':
-            showMessage('Login cancelled. Please try again');
-            break;
-          default:
-            showMessage('Google sign-in failed. Please try again');
-        }
-      }
-    });
-  }
-    
+    // Handle Google Sign In
+    if (googleButton) {
+        googleButton.addEventListener('click', async () => {
+            try {
+                setLoading(googleButton, true);
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const result = await firebase.auth().signInWithPopup(provider);
+                const user = result.user;
+
+                showMessage('Login successful! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('Google sign-in error:', error);
+                setLoading(googleButton, false);
+
+                switch (error.code) {
+                    case 'auth/popup-blocked':
+                        showMessage('Please allow popups for this website');
+                        break;
+                    case 'auth/popup-closed-by-user':
+                        showMessage('Login cancelled. Please try again');
+                        break;
+                    default:
+                        showMessage('Google sign-in failed. Please try again');
+                }
+            }
+        });
+    }
+
 
     document.getElementById('homeButton').addEventListener('click', function () {
         // Option 1: Go back one step in browser history
@@ -583,7 +587,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('beforeunload', () => {
         cleanupVerificationTimer();
     });
-    
+
 
     // Check auth state
     firebase.auth().onAuthStateChanged((user) => {
@@ -603,6 +607,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-    
+
 
 });
