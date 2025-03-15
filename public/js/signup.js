@@ -400,14 +400,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 const user = firebase.auth().currentUser;
                 if (user) {
                     await user.sendEmailVerification({
-                        url: window.location.origin + 'https://kartikbansode.github.io/Fromto/public/chat.html'
+                        url:'https://kartikbansode.github.io/Fromto/public/chat.html'
                     });
                     showMessage('Verification email resent!', 'success');
                     timeLeft = 30;
                 } else {
                     await firebase.auth().signInWithEmailAndPassword(email, passwordInput.value);
                     await firebase.auth().currentUser.sendEmailVerification({
-                        url: window.location.origin + 'https://kartikbansode.github.io/Fromto/public/chat.html'
+                        url:'https://kartikbansode.github.io/Fromto/public/chat.html'
                     });
                 }
             } catch (error) {
@@ -462,7 +462,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
                 // Send verification email
                 await user.sendEmailVerification({
-                    url: window.location.origin + 'https://kartikbansode.github.io/Fromto/public/chat.html'
+                    url:'https://kartikbansode.github.io/Fromto/public/chat.html'
                 });
     
                 // Show verification status
