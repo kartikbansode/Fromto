@@ -64,7 +64,7 @@ gsap.to(".reveal-up", {
     y: "100%",
 })
 
-gsap.to("#dashboard", {
+gsap.to("https://kartikbansode.github.io/Fromto/public", {
     boxShadow: "0px 15px 25px -5px rgba(170,49,233,0.44021358543417366)",
     duration: 0.3,
     scrollTrigger: {
@@ -79,7 +79,7 @@ gsap.to("#dashboard", {
 
 // ------------- reveal section animations ---------------
 
-const sections = gsap.utils.toArray("section")
+const sections = gsap.utils.toArray("https://kartikbansode.github.io/Fromto/public")
 
 sections.forEach((sec) => {
 
