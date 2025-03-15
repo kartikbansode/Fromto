@@ -12,6 +12,7 @@ body, html {
     padding: 0;
     height: 100vh;
     font-family: 'Poppins', sans-serif;
+    background-color: #181B20;
 }
 
 .login-page {
