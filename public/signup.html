@@ -50,6 +50,7 @@
                 line-height: 1.5;
             }
         </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 function checkScreenSize() {
@@ -57,9 +58,9 @@
                         document.body.innerHTML = `
                             <div class="mobile-warning">
                                 <div class="content">
-                                    <div class="icon">🚫</div>
-                                    <h1>Desktop Only</h1>
-                                    <p>We're sorry, but this website is only accessible on desktop screens. Please visit us on a desktop device for the best experience.</p>
+                                    <div class="icon"><i class="fa-solid fa-desktop fa-beat"></i></div>
+                                    <h1>Designed for Larger Screens</h1>
+                                    <p>For the best experience and full functionality, please access this website on a larger screen.</p>
                                 </div>
                             </div>
                         `;
