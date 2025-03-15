@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const signupButton = document.getElementById('signupButton');
     const messageDiv = document.getElementById('message');
     const verificationDiv = document.getElementById('verificationMessage');
+    const googleButton = document.getElementById('googleLogin');
 
     // Check auth state on page load
     firebase.auth().onAuthStateChanged(async (user) => {
@@ -536,6 +537,37 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
     
+  // Handle Google Sign In
+  if (googleButton) {
+    googleButton.addEventListener('click', async () => {
+      try {
+        setLoading(googleButton, true);
+        const provider = new firebase.auth.GoogleAuthProvider();
+        const result = await firebase.auth().signInWithPopup(provider);
+        const user = result.user;
+
+        showMessage('Login successful! Redirecting...', 'success');
+        setTimeout(() => {
+          window.location.href = 'https://kartikbansode.github.io/Fromto/public/chat.html';
+        }, 1500);
+
+      } catch (error) {
+        console.error('Google sign-in error:', error);
+        setLoading(googleButton, false);
+
+        switch (error.code) {
+          case 'auth/popup-blocked':
+            showMessage('Please allow popups for this website');
+            break;
+          case 'auth/popup-closed-by-user':
+            showMessage('Login cancelled. Please try again');
+            break;
+          default:
+            showMessage('Google sign-in failed. Please try again');
+        }
+      }
+    });
+  }
     
 
     document.getElementById('homeButton').addEventListener('click', function () {
