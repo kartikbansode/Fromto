@@ -22,7 +22,7 @@
     padding: 0 1rem;
     background-color: #181B20;
     color: #f3f4f6;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(66, 66, 66, 0.582);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     z-index: 100;
 }
@@ -69,6 +69,9 @@
     align-items: center;
     gap: 1rem;
     margin-left: auto;
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
 }
 
 .user-dropdown {
@@ -118,7 +121,7 @@
 #userEmail {
     font-size: 0.9rem;
     font-weight: 500;
-    color: #4a5568;
+    color: #fafafa;
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
@@ -412,7 +415,7 @@
 }
 
 .connection-banner.disconnected {
-    background-color: #181B20;
+    background-color: #1a293d;
     color: #822727;
     border-bottom: 1px solid #1f2937;
 }
