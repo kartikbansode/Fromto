@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const signupButton = document.getElementById('signupButton');
     const messageDiv = document.getElementById('message');
     const verificationDiv = document.getElementById('verificationMessage');
-    const googleButton = document.getElementById('googleLogin');
+    const googleButton = document.getElementById('googleSignup');
 
     // Check auth state on page load
     firebase.auth().onAuthStateChanged(async (user) => {
