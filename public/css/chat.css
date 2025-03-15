@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     padding: 0 1rem;
-    background: #1f2937;
+    background-color: #181B20;
     border-color: #374151;
     color: #f3f4f6;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
@@ -33,6 +33,7 @@
     align-items: center;
     gap: 12px;
     padding-left: 10px;
+    background-color: #181B20;
 }
 
 .chat-brand img {
@@ -179,7 +180,9 @@
 }
 
 .card {
-    background: white;
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     padding: 1.5rem;
@@ -217,11 +220,12 @@
     font-weight: 700;
     letter-spacing: 2px;
     padding: 0.75rem 1rem;
-    background: #f7fafc;
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
     border: 1px dashed #cbd5e0;
     border-radius: 8px;
     text-align: center;
-    color: #4a6bdf;
     user-select: all;
 }
 
@@ -680,6 +684,7 @@ html,
 body {
     height: 100%;
     overflow: hidden;
+    background-color: #181B20;
 }
 
 /* Enhanced Responsive Design for All Devices */
