@@ -165,7 +165,7 @@
     overflow: hidden;
     height: calc(100vh - 60px);
     max-height: calc(100vh - 60px);
-    background: #1f2937;
+    background-color: #181B20;;
     border-color: #374151;
     color: #f3f4f6;
 }
