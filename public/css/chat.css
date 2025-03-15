@@ -176,15 +176,10 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    background: #1f2937;
-    border-color: #374151;
-    color: #f3f4f6;
 }
 
 .card {
-    background: #1f2937;
-    border-color: #374151;
-    color: #f3f4f6;
+    background: white;
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     padding: 1.5rem;
@@ -214,9 +209,6 @@
 .code-section {
     position: relative;
     margin: 1rem 0;
-    background: #1f2937;
-    border-color: #374151;
-    color: #f3f4f6;
 }
 
 .code-display {
@@ -380,18 +372,13 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: #1f2937;
-    border-color: #374151;
-    color: #f3f4f6;
 }
 
 .chat-window {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: #1f2937;
-    border-color: #374151;
-    color: #f3f4f6;
+    background: white;
     border-radius: 19px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     overflow: hidden;
