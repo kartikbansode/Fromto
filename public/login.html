@@ -10,6 +10,37 @@
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <style>
+        .mobile-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            color: black;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function checkScreenSize() {
+                if (window.innerWidth < 1024) {
+                    document.body.innerHTML = '<div class="mobile-warning">This website allows only desktop screens. Sorry!!</div>';
+                }
+            }
+            checkScreenSize();
+            window.addEventListener('resize', checkScreenSize);
+        });
+    </script>
 </head>
 <body>
     <div class="login-page">
