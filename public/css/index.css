@@ -1,21 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root{
+
     --btn-color: #fdfdfd;/* button color*/
-    --btn-bg: #4f46e5;/* button bg color*/
-    --primary-text-color: #f8fafc;
+    --btn-bg: #4f55c1;/* button bg color*/
+
+    --primary-text-color: #4f55c1;
     --header-link-hover: #6c72e8;
-    --input-hover-bd-color: #4f46e5;
-    --background: #181B20;
+    --input-hover-bd-color: #4f55c1;
 }
+
 
 html {
     scroll-behavior: smooth;
     font-family: "Roboto", sans-serif;
-}
-
-body {
-    background-color: var(--background);
 }
 
 header{
@@ -108,15 +106,9 @@ header > .collapsible-header{
     cursor: default;
 }
 
-.btn-outline {
-    border-color: var(--btn-bg);
-    color: var(--btn-bg);
-}
-
 .input{
     padding: 10px;
-    background-color: var(--background);
-    color: var(--primary-text-color);
+    background-color: transparent;
     border-radius: 25px;
     /* outline: none; */
     min-width: 100px;
@@ -206,14 +198,6 @@ header > .collapsible-header{
 .collapsible .active,
 .collapsible:hover {
     /* background-color: #dedddd; */
-}
-
-.modal-overlay {
-    background: rgba(24, 27, 32, 0.9);
-}
-
-.card {
-    background-color: var(--background);
 }
 
 @media not all and (min-width: 1024px) {

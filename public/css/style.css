@@ -7,12 +7,12 @@
 
 /* Root Variables */
 :root {
-    --primary-color: #4f46e5;
+    --primary-color: #4361ee;
     --secondary-color: #3a0ca3;
     --accent-color: #ef233c;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e0;
-    --background: #181B20;
+    --text-primary: #2b2d42;
+    --text-secondary: #6c757d;
+    --background: #f8f9fa;
     --white: #ffffff;
     --transition: all 0.3s ease;
 }
@@ -23,7 +23,6 @@ body {
     min-height: 100vh;
     color: var(--text-primary);
     line-height: 1.6;
-    background-color: var(--background);
 }
 
 .container {
@@ -302,20 +301,4 @@ body {
     .container {
         padding: 0 1rem;
     }
-}
-
-/* Adjust input colors */
-.input {
-    background-color: var(--background);
-    color: var(--text-primary);
-}
-
-/* Adjust modal colors */
-.modal-overlay {
-    background: rgba(24, 27, 32, 0.9);
-}
-
-/* Adjust card colors */
-.card {
-    background-color: var(--background);
 }
