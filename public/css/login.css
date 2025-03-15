@@ -1,10 +1,12 @@
 :root {
-    --primary-color: #4285f4;
-    --secondary-color: #34a853;
-    --accent-color: #7c3aed;
-    --surface-color: #ffffff;
-    --text-primary: #333333;
-    --text-secondary: #666666;
+    --primary-color: #4f46e5;
+    --secondary-color: #3a0ca3;
+    --accent-color: #ef233c;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e0;
+    --background: #181B20;
+    --white: #ffffff;
+    --transition: all 0.3s ease;
 }
 
 body, html {
@@ -12,6 +14,7 @@ body, html {
     padding: 0;
     height: 100vh;
     font-family: 'Poppins', sans-serif;
+    background-color: var(--background);
 }
 
 .login-page {
@@ -100,6 +103,8 @@ body, html {
     font-size: 0.95rem;
     transition: all 0.3s ease;
     box-sizing: border-box; /* Added to include padding in width */
+    background-color: var(--background);
+    color: var(--text-primary);
 }
 
 
@@ -164,7 +169,7 @@ p .forgot-password{
     box-sizing: border-box; /* Added to include padding in width */
 }
 .btn-primary {
-    background: linear-gradient(45deg, #4f46e5, #7c3aed);
+    background: var(--primary-color);
     color: white;
 }
 
@@ -456,4 +461,12 @@ p .forgot-password{
 button:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+}
+
+.modal-overlay {
+    background: rgba(24, 27, 32, 0.9);
+}
+
+.card {
+    background-color: var(--background);
 }
